@@ -9,15 +9,18 @@ public class RemappableInput : MonoBehaviour
 
     private static string UP = "Up", DOWN = "Down", RIGHT = "Right", LEFT = "Left";
 
-    private Dictionary<Direction, MappedDirection> directions = new Dictionary<Direction, MappedDirection> {
+    private Dictionary<Direction, MappedDirection> originalDirections = new Dictionary<Direction, MappedDirection> {
         { Direction.RIGHT, new MappedDirection(Direction.RIGHT, RIGHT) },
         { Direction.LEFT, new MappedDirection(Direction.LEFT, LEFT) },
         { Direction.UP, new MappedDirection(Direction.UP, UP) },
         { Direction.DOWN, new MappedDirection(Direction.DOWN, DOWN) }
     };
 
+    private Dictionary<Direction, MappedDirection> mappedDirections;
+
     void Awake() {
         Main = this;
+        mappedDirections = originalDirections;
     }
 
     // Start is called before the first frame update
@@ -31,31 +34,48 @@ public class RemappableInput : MonoBehaviour
     }
 
     public float GetHorizontal() {
-        var leftInput = directions[Direction.LEFT].GetAbsoluteValue();
-        var rightInput = directions[Direction.RIGHT].GetAbsoluteValue();
+        var leftInput = mappedDirections[Direction.LEFT].GetAbsoluteValue();
+        var rightInput = mappedDirections[Direction.RIGHT].GetAbsoluteValue();
         return rightInput - leftInput;
     }
 
     public float GetVertical() {
-        var upInput = directions[Direction.UP].GetAbsoluteValue();
-        var downInput = directions[Direction.DOWN].GetAbsoluteValue();
+        var upInput = mappedDirections[Direction.UP].GetAbsoluteValue();
+        var downInput = mappedDirections[Direction.DOWN].GetAbsoluteValue();
         return upInput - downInput;
     }
 
     public void RandomizeDirections() {
-        var values = directions.Values.ToList().Shuffled();
-        directions = new Dictionary<Direction, MappedDirection> {
+        var values = originalDirections.Values.ToList().Shuffled();
+        mappedDirections = new Dictionary<Direction, MappedDirection> {
             { Direction.RIGHT, values.Pop() },
             { Direction.LEFT, values.Pop() },
             { Direction.UP, values.Pop() },
             { Direction.DOWN, values.Pop() }
         };
 
+        debugInputs();
+    }
+
+    public void ResetDirections() {
+        mappedDirections = originalDirections;
+
+        debugInputs();
+    }
+
+    /// Returns current Input -> Movedirection mappings.
+    /// The key is the input (eg. 'up' = 'W') and the value is the direction that key will move the player.
+    public Dictionary<Direction, Direction> GetInputMappings() {
+        return mappedDirections.ToDictionary(it => it.Value.Direction, it => it.Key);
+    }
+
+    private void debugInputs() {
+        var inputs = GetInputMappings();
         Debug.Log("Inputs are now:");
-        Debug.Log("UP: " + directions[Direction.UP].Direction);
-        Debug.Log("DOWN: " + directions[Direction.DOWN].Direction);
-        Debug.Log("LEFT: " + directions[Direction.LEFT].Direction);
-        Debug.Log("RIGHT: " + directions[Direction.RIGHT].Direction);
+        Debug.Log("UP / W: " + inputs[Direction.UP]);
+        Debug.Log("DOWN / S: " + inputs[Direction.DOWN]);
+        Debug.Log("LEFT / A : " + inputs[Direction.LEFT]);
+        Debug.Log("RIGHT / D: " + inputs[Direction.RIGHT]);
     }
 }
 
