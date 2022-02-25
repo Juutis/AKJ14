@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6afb550071a13bb4884b092a284f5f5d, type: 3}
+  m_Name: WorldMoverConfig
+  m_EditorClassIdentifier: 
+  speed: 2
+  speedMax: 10
+  bufferZoneSize: 1
+  spawns:
+  - moveObject: {fileID: 4714013070266136771, guid: c0ab842ae0b763849aaf6e320ab25316, type: 3}
+    spawnEveryDistance: 1
+    spawnAmount: 3
+  - moveObject: {fileID: 8169129004064319174, guid: c6beb784f9fbb254c9e6d7f65a901484, type: 3}
+    spawnEveryDistance: 3
+    spawnAmount: 1
