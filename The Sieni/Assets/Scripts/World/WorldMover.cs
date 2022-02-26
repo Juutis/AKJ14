@@ -60,6 +60,11 @@ public class WorldMover : MonoBehaviour
 #if UNITY_EDITOR
         distanceMoved += moveConfig.PlaytestStepOffset;
         currentStep += moveConfig.PlaytestStepOffset;
+        speedIncrease = System.Math.Clamp(
+            (currentStep / moveConfig.SpeedIncreaseStepInterval) * moveConfig.SpeedIncrease,
+            0,
+            moveConfig.SpeedMax - moveConfig.Speed
+        );
 #endif
 
         scrollingMaterial.SetFloat("_Offset_X", 0.0f);

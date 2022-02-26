@@ -8,10 +8,12 @@ public class UIShroomPopup : MonoBehaviour
     [SerializeField]
     private Transform buttonContainer;
 
-    List<UIMoveButtonInfo> moveButtons;
+    [SerializeField]
+    private List<UIMoveButtonInfo> moveButtons;
+    bool popupping = false;
     public void InitializeButtons(List<UIMoveButtonData> buttonDatas)
     {
-        moveButtons = buttonContainer.transform.GetComponentsInChildren<UIMoveButtonInfo>().ToList();
+        //moveButtons = buttonContainer.transform.GetComponentsInChildren<UIMoveButtonInfo>().ToList();
         foreach (UIMoveButtonData buttonData in buttonDatas)
         {
             if (buttonData.ButtonType == MoveButtonType.Top)
@@ -38,6 +40,11 @@ public class UIShroomPopup : MonoBehaviour
 
     public void Popup()
     {
+        popupping = true;
+        foreach (UIMoveButtonInfo moveButton in moveButtons)
+        {
+            moveButton.Unhighlight();
+        }
         Time.timeScale = 0f;
         animator.Play("Show");
     }
@@ -51,10 +58,59 @@ public class UIShroomPopup : MonoBehaviour
     public void HideFinished()
     {
         Time.timeScale = 1f;
+        popupping = false;
+    }
+
+    public void HighlightTraditional()
+    {
+        if (popupping)
+        {
+            return;
+        }
+        float horiz = Input.GetAxis("Horizontal");
+        float verti = Input.GetAxis("Vertical");
+
+        float min = 0.1f;
+        if (horiz > min)
+        {
+            moveButtons[3].Highlight();
+        }
+        else
+        {
+            moveButtons[3].Unhighlight();
+        }
+        if (horiz < -min)
+        {
+            moveButtons[1].Highlight();
+        }
+        else
+        {
+            moveButtons[1].Unhighlight();
+        }
+        if (verti > min)
+        {
+            moveButtons[0].Highlight();
+        }
+        else
+        {
+            moveButtons[0].Unhighlight();
+        }
+        if (verti < -min)
+        {
+            moveButtons[2].Highlight();
+        }
+        else
+        {
+            moveButtons[2].Unhighlight();
+        }
     }
 
     public void HighlightMoveButtons(Vector2 input)
     {
+        if (popupping)
+        {
+            return;
+        }
         float min = 0.1f;
         UIMoveButtonInfo top = GetButton(MoveButtonType.Top);
         UIMoveButtonInfo left = GetButton(MoveButtonType.Left);
@@ -111,33 +167,39 @@ public class UIShroomPopup : MonoBehaviour
         {Direction.RIGHT, "→"},
         {Direction.DOWN, "↓"}
     };
+
     public void RemapUIButtons()
     {
+
         Dictionary<Direction, Direction> mappings = RemappableInput.Main.GetInputMappings();
         foreach (KeyValuePair<Direction, Direction> kvp in mappings)
         {
             Direction key = kvp.Key;
             Direction direction = kvp.Value;
-            if (direction == Direction.UP)
+            if (key == Direction.UP)
             {
-                UIMoveButtonInfo moveButton = GetButton(MoveButtonType.Top);
-                moveButton.SetKey(inputsToKeys[key], inputsToKeyIcons[key]);
+                UIMoveButtonInfo moveButton = moveButtons[0];
+                moveButton.SetKey(inputsToKeys[direction], inputsToKeyIcons[direction]);
             }
-            if (direction == Direction.LEFT)
+            if (key == Direction.LEFT)
             {
-                UIMoveButtonInfo moveButton = GetButton(MoveButtonType.Left);
-                moveButton.SetKey(inputsToKeys[key], inputsToKeyIcons[key]);
+                UIMoveButtonInfo moveButton = moveButtons[1];
+                moveButton.SetKey(inputsToKeys[direction], inputsToKeyIcons[direction]);
+
             }
-            if (direction == Direction.RIGHT)
+            if (key == Direction.RIGHT)
             {
-                UIMoveButtonInfo moveButton = GetButton(MoveButtonType.Right);
-                moveButton.SetKey(inputsToKeys[key], inputsToKeyIcons[key]);
+                UIMoveButtonInfo moveButton = moveButtons[3];
+                moveButton.SetKey(inputsToKeys[direction], inputsToKeyIcons[direction]);
+
             }
-            if (direction == Direction.DOWN)
+            if (key == Direction.DOWN)
             {
-                UIMoveButtonInfo moveButton = GetButton(MoveButtonType.Bottom);
-                moveButton.SetKey(inputsToKeys[key], inputsToKeyIcons[key]);
+                UIMoveButtonInfo moveButton = moveButtons[2];
+                moveButton.SetKey(inputsToKeys[direction], inputsToKeyIcons[direction]);
+
             }
+            //Debug.Log($"Set physical {key} to {inputsToKeyIcons[direction]}");
         }
     }
 }

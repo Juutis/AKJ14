@@ -28,7 +28,8 @@ public class UIManager : MonoBehaviour
 
     public void HighlightMoveButtons(Vector2 input)
     {
-        uiShroomPopup.HighlightMoveButtons(input);
+        //uiShroomPopup.HighlightMoveButtons(input);
+        uiShroomPopup.HighlightTraditional();
     }
 }
 

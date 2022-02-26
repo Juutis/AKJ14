@@ -35,6 +35,7 @@ public class UIMoveButtonInfo : MonoBehaviour
     {
         txtKey.text = newKey.ToString();
         txtIcon.text = keyIcon;
+        Debug.Log($"I ({buttonType}) was set to {txtIcon.text}");
     }
 
     public void Highlight()
