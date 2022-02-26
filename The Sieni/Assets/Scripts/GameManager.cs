@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     private int moveShroomEffectCount = 0;
     private int visionShroomEffectCount = 0;
 
+    private int moveShroomsEaten = 0;
+
     private int totalEffectCount {
         get {
             return moveShroomEffectCount + visionShroomEffectCount;
@@ -49,7 +51,7 @@ public class GameManager : MonoBehaviour
         if (objectType == MoveObjectType.MoveShroom)
         {
             ShroomEffects.Main.SetOnAcid(true);
-            RemappableInput.Main.RandomizeDirections();
+            changeControls();
             moveShroomEffectCount++;
             Invoke("EndMoveShroomEffect", getDurationForType(objectType));
             UIManager.main.RemapButtons();
@@ -96,6 +98,21 @@ public class GameManager : MonoBehaviour
 
     private float getDurationForType(MoveObjectType type) {
         return durations.Find(it => it.Type == type).Duration;
+    }
+
+    private void changeControls() {
+        if (moveShroomsEaten < 5) {
+            if (UnityEngine.Random.Range(0.0f, 1.0f) < 0.50f) {
+                RemappableInput.Main.InvertHorizontalControls();
+            } else {
+                RemappableInput.Main.InvertVerticalControls();
+            }
+        } else if (moveShroomsEaten < 10) {
+            RemappableInput.Main.InvertControls();
+        } else {
+            RemappableInput.Main.RandomizeDirections();
+        }
+        moveShroomsEaten++;
     }
 }
 

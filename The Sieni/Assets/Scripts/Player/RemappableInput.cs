@@ -9,11 +9,17 @@ public class RemappableInput : MonoBehaviour
 
     private static string UP = "Up", DOWN = "Down", RIGHT = "Right", LEFT = "Left";
 
+    private static MappedDirection
+        DIR_UP = new MappedDirection(Direction.UP, UP),
+        DIR_DOWN = new MappedDirection(Direction.DOWN, DOWN),
+        DIR_RIGHT = new MappedDirection(Direction.RIGHT, RIGHT),
+        DIR_LEFT = new MappedDirection(Direction.LEFT, LEFT);
+
     private Dictionary<Direction, MappedDirection> originalDirections = new Dictionary<Direction, MappedDirection> {
-        { Direction.RIGHT, new MappedDirection(Direction.RIGHT, RIGHT) },
-        { Direction.LEFT, new MappedDirection(Direction.LEFT, LEFT) },
-        { Direction.UP, new MappedDirection(Direction.UP, UP) },
-        { Direction.DOWN, new MappedDirection(Direction.DOWN, DOWN) }
+        { Direction.RIGHT, DIR_RIGHT },
+        { Direction.LEFT, DIR_LEFT },
+        { Direction.UP, DIR_UP },
+        { Direction.DOWN, DIR_DOWN }
     };
 
     private Dictionary<Direction, MappedDirection> mappedDirections;
@@ -43,6 +49,35 @@ public class RemappableInput : MonoBehaviour
         var upInput = mappedDirections[Direction.UP].GetAbsoluteValue();
         var downInput = mappedDirections[Direction.DOWN].GetAbsoluteValue();
         return upInput - downInput;
+    }
+
+    public void InvertControls() {
+        mappedDirections = new Dictionary<Direction, MappedDirection> {
+            { Direction.RIGHT, DIR_LEFT },
+            { Direction.LEFT, DIR_RIGHT },
+            { Direction.UP, DIR_DOWN },
+            { Direction.DOWN, DIR_UP }
+        };
+
+        debugInputs();
+    }
+
+    public void InvertHorizontalControls() {
+        mappedDirections = new Dictionary<Direction, MappedDirection> {
+            { Direction.RIGHT, DIR_LEFT },
+            { Direction.LEFT, DIR_RIGHT },
+            { Direction.UP, DIR_UP },
+            { Direction.DOWN, DIR_DOWN }
+        };
+    }
+
+    public void InvertVerticalControls() {
+        mappedDirections = new Dictionary<Direction, MappedDirection> {
+            { Direction.RIGHT, DIR_RIGHT },
+            { Direction.LEFT, DIR_LEFT },
+            { Direction.UP, DIR_DOWN },
+            { Direction.DOWN, DIR_UP }
+        };
     }
 
     public void RandomizeDirections() {
