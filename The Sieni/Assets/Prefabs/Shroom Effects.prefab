@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2777440198176878012}
   - component: {fileID: 9055442583651582121}
+  - component: {fileID: 7494498072800448246}
+  - component: {fileID: 2225005529109301299}
   m_Layer: 0
   m_Name: Shroom Effects
   m_TagString: Untagged
@@ -45,10 +47,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 842ebe9207c23ac4b88ee3349b0bb66b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7494498072800448246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2777440198176878015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a715212a72189942a699869130cf0c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   acidFadeSpeed: 5
-  volumes: []
+  volumes:
+  - {fileID: 0}
+  - {fileID: 0}
   debugActivateAcid: 0
   debugDeactivateAcid: 0
+--- !u!114 &2225005529109301299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2777440198176878015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e528ada356069342a8ab6a270eb5113, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraRoot: {fileID: 0}
+  fadeSpeed: 1
+  strength: 20
+  interval: 0.5
+  debugActivate: 0
+  debugDeactivate: 0
 --- !u!1 &2777440198222162581
 GameObject:
   m_ObjectHideFlags: 0

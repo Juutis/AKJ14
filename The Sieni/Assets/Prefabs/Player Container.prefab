@@ -460,6 +460,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1320694420791931191}
     m_Modifications:
+    - target: {fileID: 2225005529109301299, guid: 5c5c82cea674e684881eb8c240350d53, type: 3}
+      propertyPath: cameraRoot
+      value: 
+      objectReference: {fileID: 4550582113456313553}
     - target: {fileID: 2777440198176878012, guid: 5c5c82cea674e684881eb8c240350d53, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -512,6 +516,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7494498072800448246, guid: 5c5c82cea674e684881eb8c240350d53, type: 3}
+      propertyPath: volumes.Array.data[0]
+      value: 
+      objectReference: {fileID: 9136309254693784192}
+    - target: {fileID: 7494498072800448246, guid: 5c5c82cea674e684881eb8c240350d53, type: 3}
+      propertyPath: volumes.Array.data[1]
+      value: 
+      objectReference: {fileID: 8735972490389096528}
     - target: {fileID: 9055442583651582121, guid: 5c5c82cea674e684881eb8c240350d53, type: 3}
       propertyPath: volumes.Array.size
       value: 2
