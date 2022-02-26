@@ -32,11 +32,13 @@ public class GameManager : MonoBehaviour
         }
         if (objectType == MoveObjectType.MoveShroom)
         {
+            ShroomEffects.Main.SetOnAcid(true);
             RemappableInput.Main.RandomizeDirections();
         }
         if (objectType == MoveObjectType.VisionShroom)
         {
-            // call camera rotator here
+            ShroomEffects.Main.SetOnAcid(true);
+            // call CameraRotator
         }
     }
 

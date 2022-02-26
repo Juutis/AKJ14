@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 1692676433, guid: 4316476181c0fbf4b951091bb0d3cb25, type: 3}
+  m_Sprite: {fileID: -2035856966, guid: 4316476181c0fbf4b951091bb0d3cb25, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -93,7 +93,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1509425207525309760, guid: e04e9745115355e4b96e57af6e628995, type: 3}
       propertyPath: m_Name
-      value: VisionShroom
+      value: MoveShrooms
       objectReference: {fileID: 0}
     - target: {fileID: 2150543524162915940, guid: e04e9745115355e4b96e57af6e628995, type: 3}
       propertyPath: m_RootOrder
