@@ -55,7 +55,7 @@ public class PlayerInput : MonoBehaviour
         var verticalInput = RemappableInput.Main.GetVertical();
         input = new Vector2(horizontalInput, verticalInput);
         if (input.magnitude >= 1.0f) input.Normalize();
-
+        UIManager.main.HighlightMoveButtons(input);
         debugStuff();
     }
 

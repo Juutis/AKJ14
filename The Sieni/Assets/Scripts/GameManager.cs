@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
             RemappableInput.Main.RandomizeDirections();
             moveShroomEffectCount++;
             Invoke("EndMoveShroomEffect", getDurationForType(objectType));
+            UIManager.main.RemapButtons();
         }
         if (objectType == MoveObjectType.VisionShroom)
         {
