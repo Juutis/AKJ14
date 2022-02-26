@@ -13,6 +13,12 @@ public class GameManager : MonoBehaviour
     private int moveShroomEffectCount = 0;
     private int visionShroomEffectCount = 0;
 
+    private int totalEffectCount {
+        get {
+            return moveShroomEffectCount + visionShroomEffectCount;
+        }
+    }
+
     private void Awake()
     {
         main = this;
@@ -70,16 +76,20 @@ public class GameManager : MonoBehaviour
     public void EndMoveShroomEffect() {
         moveShroomEffectCount--;
         if (moveShroomEffectCount <= 0) {
-            ShroomEffects.Main.SetOnAcid(false);
             RemappableInput.Main.ResetDirections();
+            if (totalEffectCount <= 0) {
+                ShroomEffects.Main.SetOnAcid(false);
+            }
         }
     }
 
     public void EndVisionShroomEffect() {
         visionShroomEffectCount--;
         if (visionShroomEffectCount <= 0) {
-            ShroomEffects.Main.SetOnAcid(false);
-            RemappableInput.Main.ResetDirections();
+            ShroomEffects.Main.SetDizzyCamera(false);
+            if (totalEffectCount <= 0) {
+                ShroomEffects.Main.SetOnAcid(false);
+            }
         }
     }
 
