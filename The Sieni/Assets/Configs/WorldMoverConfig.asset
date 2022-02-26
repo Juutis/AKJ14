@@ -20,26 +20,40 @@ MonoBehaviour:
   bufferZoneSize: 1
   spawns:
   - isEnabled: 1
-    moveObjectType: 2
-    spawnInterval: 7
-    spawnOffset: 15
+    moveObjectType: 1
+    spawnInterval: 13
+    spawnOffset: 20
+    spawnAmount: 1
+    maxSpawns: 2
+    increaseStepInterval: 100
+  - isEnabled: 1
+    moveObjectType: 3
+    spawnInterval: 27
+    spawnOffset: 30
     spawnAmount: 1
     maxSpawns: 1
     increaseStepInterval: 0
   - isEnabled: 1
     moveObjectType: 2
-    spawnInterval: 9
-    spawnOffset: 0
-    spawnAmount: 1
-    maxSpawns: 2
-    increaseStepInterval: 20
-  - isEnabled: 1
-    moveObjectType: 1
-    spawnInterval: 20
-    spawnOffset: 20
+    spawnInterval: 39
+    spawnOffset: 50
     spawnAmount: 1
     maxSpawns: 1
+    increaseStepInterval: 0
+  - isEnabled: 1
+    moveObjectType: 4
+    spawnInterval: 7
+    spawnOffset: 0
+    spawnAmount: 1
+    maxSpawns: 3
     increaseStepInterval: 100
+  - isEnabled: 1
+    moveObjectType: 4
+    spawnInterval: 11
+    spawnOffset: 15
+    spawnAmount: 1
+    maxSpawns: 2
+    increaseStepInterval: 200
   debuggingEnabled: 1
   debugStepAmount: 20
   debugStepStart: 0

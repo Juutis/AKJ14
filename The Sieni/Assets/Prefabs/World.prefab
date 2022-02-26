@@ -1,5 +1,49 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3772948814034926304
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 373686774754621564}
+  - component: {fileID: 391328996215301684}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &373686774754621564
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3772948814034926304}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6866678855301099833}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &391328996215301684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3772948814034926304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1164c0b5c210fbd46b37481bda0e68f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4198376794926535567
 GameObject:
   m_ObjectHideFlags: 0
@@ -30,7 +74,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6866678855301099833}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7569219605311367461
 SpriteRenderer:
@@ -116,6 +160,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 373686774754621564}
   - {fileID: 6678608852363259318}
   - {fileID: 6866678855159894895}
   - {fileID: 3906378257996662240}
@@ -151,10 +196,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabs:
-  - {fileID: 8169129004064319174, guid: c6beb784f9fbb254c9e6d7f65a901484, type: 3}
-  - {fileID: 4714013070266136771, guid: c0ab842ae0b763849aaf6e320ab25316, type: 3}
+  - {fileID: 734142666506931786, guid: 71e339a039027b745b71015630f2805c, type: 3}
+  - {fileID: 3082554835777583606, guid: 3d2275d9a5f2e1a409d38f56c3929ee2, type: 3}
+  - {fileID: 734142666506931786, guid: f14c5e8b5eb4eeb4e8dc61db24a62d35, type: 3}
+  - {fileID: 734142666506931786, guid: 2d3f66dff4c79f4458fe0d7225bce8c0, type: 3}
   poolSize: 5
-  objectTypes: 0100000002000000
+  objectTypes: 01000000020000000300000004000000
   containerPrefab: {fileID: 6866678855159894895}
 --- !u!114 &5589454907514506401
 MonoBehaviour:
@@ -194,7 +241,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1320694420791931191, guid: 74533f1edc34bdf44b4296efa9bbf9d8, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1320694420791931191, guid: 74533f1edc34bdf44b4296efa9bbf9d8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -264,7 +311,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1140706612949767699, guid: a1f82ed7287b7e44f8fbc9528b28c557, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1140706612949767699, guid: a1f82ed7287b7e44f8fbc9528b28c557, type: 3}
       propertyPath: m_LocalPosition.x
