@@ -184,6 +184,7 @@ MonoBehaviour:
   isMoving: 1
   objectPool: {fileID: 5182968184930508913}
   worldBounds: {fileID: 5589454907514506401}
+  scrollingMaterial: {fileID: 2100000, guid: 2f6488114a4362d4ab04557cb4fa0812, type: 2}
 --- !u!114 &5182968184930508913
 MonoBehaviour:
   m_ObjectHideFlags: 0
