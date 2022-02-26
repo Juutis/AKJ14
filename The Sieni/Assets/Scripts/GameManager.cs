@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public void CollectWorldObject(WorldMoveObject moveObject)
     {
         MoveObjectType objectType = moveObject.ObjectType;
+        PlayerParticles.main.PlayParticles(objectType); // plays particle effects if type has one defined
+
         if (objectType == MoveObjectType.Tree)
         {
             PlayerInput playerInput = PlayerInput.main;
