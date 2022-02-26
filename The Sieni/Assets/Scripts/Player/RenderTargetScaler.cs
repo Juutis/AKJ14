@@ -13,14 +13,14 @@ public class RenderTargetScaler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        scaleToCameraSize();
     }
 
     private void scaleToCameraSize()
     {
         var cam = Camera.main;
         var ySize = cam.orthographicSize * 2.0f;
-        var xSize = cam.pixelWidth / cam.pixelHeight * ySize;
+        var xSize = cam.aspect * ySize;
         transform.localScale = new Vector3(xSize, ySize, 1.0f);
     }
 }
