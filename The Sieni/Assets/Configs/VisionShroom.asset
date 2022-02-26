@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c02e05f652211ad42a661a9053afa5b5, type: 3}
-  m_Name: Tree
+  m_Name: VisionShroom
   m_EditorClassIdentifier: 
-  objectType: 4
+  objectType: 2

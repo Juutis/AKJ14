@@ -46,15 +46,16 @@ public class WorldMoverDebugger : MonoBehaviour
                 List<Vector2> spawnPoints = worldMover.ClaimSpawnPoints(possiblePoints, step + moveConfig.DebugStepStart, spawn, moveConfig.DebugStepStart);
                 foreach (Vector2 spawnPoint in spawnPoints)
                 {
-                    if (spawn.MoveObjectType == MoveObjectType.Shroom)
-                    {
-                        Gizmos.color = Color.magenta;
-                        Gizmos.DrawSphere(new Vector2(-moveConfig.DebugStepAmount + spawnPoint.x + step, spawnPoint.y), 0.5f);
-                    }
-                    else if (spawn.MoveObjectType == MoveObjectType.Tree)
+                    if (spawn.MoveObjectType == MoveObjectType.Tree)
                     {
                         Gizmos.color = Color.green;
                         Gizmos.DrawCube(new Vector2(-moveConfig.DebugStepAmount + spawnPoint.x + step, spawnPoint.y), Vector3.one);
+                    }
+                    else
+                    {
+
+                        Gizmos.color = spawn.MoveObjectType == MoveObjectType.VisionShroom ? Color.magenta : (spawn.MoveObjectType == MoveObjectType.MoveShroom ? Color.cyan : Color.yellow);
+                        Gizmos.DrawSphere(new Vector2(-moveConfig.DebugStepAmount + spawnPoint.x + step, spawnPoint.y), 0.5f);
                     }
                 }
             }

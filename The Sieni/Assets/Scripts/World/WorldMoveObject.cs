@@ -14,6 +14,10 @@ public class WorldMoveObject : MonoBehaviour
     [SerializeField]
     GameObject container;
 
+    [SerializeField]
+    [Tooltip("Leave empty if just a single style!")]
+    List<GameObject> possibleStyles = new List<GameObject>();
+
     public void Initialize(string newName)
     {
         originalName = newName;
@@ -27,7 +31,40 @@ public class WorldMoveObject : MonoBehaviour
 
     public void Wakeup()
     {
+        if (possibleStyles.Count > 0)
+        {
+            int randomIndex = Random.Range(0, possibleStyles.Count);
+            for (int index = 0; index < possibleStyles.Count; index += 1)
+            {
+                if (randomIndex != index)
+                {
+                    possibleStyles[index].SetActive(false);
+                }
+                else
+                {
+                    possibleStyles[index].SetActive(true);
+                }
+            }
+        }
         container.SetActive(true);
         name = $"{originalName} [active]";
+    }
+
+    public void Kill()
+    {
+        WorldMover.main.Sleep(this);
+    }
+
+    public void OnTriggerEnter2DFromChild(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            GameManager.main.CollectWorldObject(this);
+        }
+    }
+
+    public void OnCollisionEnter2DFromChild(Collision2D other)
+    {
+
     }
 }

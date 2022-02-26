@@ -13,7 +13,9 @@ public class ObjectPool : MonoBehaviour
     private int poolSize = 20;
     [SerializeField]
     private List<MoveObjectType> objectTypes = new List<MoveObjectType>{
-        MoveObjectType.Shroom,
+        MoveObjectType.MoveShroom,
+        MoveObjectType.VisionShroom,
+        MoveObjectType.RegularShroom,
         MoveObjectType.Tree,
     };
 

@@ -19,6 +19,8 @@ public class MoveObject {
 public enum MoveObjectType
 {
     None,
-    Shroom,
+    RegularShroom,
+    VisionShroom,
+    MoveShroom,
     Tree
 }

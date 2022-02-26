@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class WorldMover : MonoBehaviour
 {
+    public static WorldMover main;
+    private void Awake()
+    {
+        main = this;
+    }
+
     [SerializeField]
     private WorldMoverConfig moveConfig;
     public WorldMoverConfig MoveConfig { get { return moveConfig; } }
@@ -33,6 +39,8 @@ public class WorldMover : MonoBehaviour
 
     private int previousSpeedIncreaseStep = 0;
 
+    public bool IsMoving { get { return isMoving; } set { isMoving = value; } }
+
     void Start()
     {
         foreach (MoveObjectSpawn spawn in moveConfig.Spawns)
@@ -46,6 +54,10 @@ public class WorldMover : MonoBehaviour
 
     void Update()
     {
+        if (!isMoving)
+        {
+            return;
+        }
         CalculateStep();
         MoveObjects();
         SpawnObjects();
@@ -103,16 +115,13 @@ public class WorldMover : MonoBehaviour
 
     private void CalculateStep()
     {
-        if (isMoving)
+        moveDistance = (speedIncrease + moveConfig.Speed) * Time.deltaTime;
+        distanceMoved += moveDistance;
+        if (distanceMoved >= currentStep)
         {
-            moveDistance = (speedIncrease + moveConfig.Speed) * Time.deltaTime;
-            distanceMoved += moveDistance;
-            if (distanceMoved >= currentStep)
-            {
-                currentStep += 1;
-                isSpawning = true;
-                isMovingObjects = true;
-            }
+            currentStep += 1;
+            isSpawning = true;
+            isMovingObjects = true;
         }
     }
 

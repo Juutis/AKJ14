@@ -1,0 +1,52 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class GameManager : MonoBehaviour
+{
+    public static GameManager main;
+    private void Awake()
+    {
+        main = this;
+    }
+
+    public void CollectWorldObject(WorldMoveObject moveObject)
+    {
+        MoveObjectType objectType = moveObject.ObjectType;
+        if (objectType == MoveObjectType.Tree)
+        {
+            PlayerInput playerInput = PlayerInput.main;
+            playerInput.IsEnabled = false;
+            playerInput.Stop();
+            Debug.Log("You hit a tree!");
+            WorldMover.main.IsMoving = false;
+            GameOver();
+        }
+        else
+        {
+            moveObject.Kill();
+        }
+        if (objectType == MoveObjectType.RegularShroom)
+        {
+            GainScore(1);
+        }
+        if (objectType == MoveObjectType.MoveShroom)
+        {
+            RemappableInput.Main.RandomizeDirections();
+        }
+        if (objectType == MoveObjectType.VisionShroom)
+        {
+            // call camera rotator here
+        }
+    }
+
+    public void GainScore(int score)
+    {
+        Debug.Log($"Gained {score} score!");
+    }
+
+    public void GameOver()
+    {
+        Debug.Log("Game over!");
+    }
+}
