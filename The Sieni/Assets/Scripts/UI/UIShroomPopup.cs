@@ -105,6 +105,12 @@ public class UIShroomPopup : MonoBehaviour
         {Direction.RIGHT, KeyCode.D},
         {Direction.DOWN, KeyCode.S}
     };
+    Dictionary<Direction, string> inputsToKeyIcons = new Dictionary<Direction, string>{
+        {Direction.UP, "↑"},
+        {Direction.LEFT, "←"},
+        {Direction.RIGHT, "→"},
+        {Direction.DOWN, "↓"}
+    };
     public void RemapUIButtons()
     {
         Dictionary<Direction, Direction> mappings = RemappableInput.Main.GetInputMappings();
@@ -115,22 +121,22 @@ public class UIShroomPopup : MonoBehaviour
             if (direction == Direction.UP)
             {
                 UIMoveButtonInfo moveButton = GetButton(MoveButtonType.Top);
-                moveButton.SetKey(inputsToKeys[key]);
+                moveButton.SetKey(inputsToKeys[key], inputsToKeyIcons[key]);
             }
             if (direction == Direction.LEFT)
             {
                 UIMoveButtonInfo moveButton = GetButton(MoveButtonType.Left);
-                moveButton.SetKey(inputsToKeys[key]);
+                moveButton.SetKey(inputsToKeys[key], inputsToKeyIcons[key]);
             }
             if (direction == Direction.RIGHT)
             {
                 UIMoveButtonInfo moveButton = GetButton(MoveButtonType.Right);
-                moveButton.SetKey(inputsToKeys[key]);
+                moveButton.SetKey(inputsToKeys[key], inputsToKeyIcons[key]);
             }
             if (direction == Direction.DOWN)
             {
                 UIMoveButtonInfo moveButton = GetButton(MoveButtonType.Bottom);
-                moveButton.SetKey(inputsToKeys[key]);
+                moveButton.SetKey(inputsToKeys[key], inputsToKeyIcons[key]);
             }
         }
     }

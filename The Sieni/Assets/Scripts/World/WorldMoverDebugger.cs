@@ -51,9 +51,13 @@ public class WorldMoverDebugger : MonoBehaviour
                         Gizmos.color = Color.green;
                         Gizmos.DrawCube(new Vector2(-moveConfig.DebugStepAmount + spawnPoint.x + step, spawnPoint.y), Vector3.one);
                     }
+                    else if (spawn.MoveObjectType == MoveObjectType.Decoration)
+                    {
+                        Gizmos.color = Color.green;
+                        Gizmos.DrawWireSphere(new Vector2(-moveConfig.DebugStepAmount + spawnPoint.x + step, spawnPoint.y), 0.5f);
+                    }
                     else
                     {
-
                         Gizmos.color = spawn.MoveObjectType == MoveObjectType.VisionShroom ? Color.magenta : (spawn.MoveObjectType == MoveObjectType.MoveShroom ? Color.cyan : Color.yellow);
                         Gizmos.DrawSphere(new Vector2(-moveConfig.DebugStepAmount + spawnPoint.x + step, spawnPoint.y), 0.5f);
                     }

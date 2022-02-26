@@ -31,9 +31,10 @@ public class UIMoveButtonInfo : MonoBehaviour
         originalColor = imgButton.color;
     }
 
-    public void SetKey(KeyCode newKey)
+    public void SetKey(KeyCode newKey, string keyIcon)
     {
         txtKey.text = newKey.ToString();
+        txtIcon.text = keyIcon;
     }
 
     public void Highlight()

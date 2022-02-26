@@ -46,6 +46,7 @@ public class WorldMover : MonoBehaviour
 
     public bool IsMoving { get { return isMoving; } set { isMoving = value; } }
 
+
     void Start()
     {
         foreach (MoveObjectSpawn spawn in moveConfig.Spawns)
@@ -55,6 +56,11 @@ public class WorldMover : MonoBehaviour
         worldBounds.DetermineBounds();
         spawnPositions = InitializeSpawnPositions();
         objectPool.Initialize();
+
+#if UNITY_EDITOR
+        distanceMoved += moveConfig.PlaytestStepOffset;
+        currentStep += moveConfig.PlaytestStepOffset;
+#endif
 
         scrollingMaterial.SetFloat("_Offset_X", 0.0f);
     }

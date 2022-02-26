@@ -6,6 +6,11 @@ using System.Linq;
 [CreateAssetMenu(fileName = "WorldMoverConfig", menuName = "Configs/New WorldMoverConfig")]
 public class WorldMoverConfig : ScriptableObject
 {
+    [Header("Playtesting")]
+    [SerializeField]
+    [Range(0, 1000)]
+    private int playtestStepOffset = 0;
+
     [Header("General")]
     [SerializeField]
     private float speed;
@@ -28,6 +33,7 @@ public class WorldMoverConfig : ScriptableObject
     [SerializeField]
     private List<MoveObjectSpawn> spawns = new List<MoveObjectSpawn>();
 
+    public int PlaytestStepOffset { get { return playtestStepOffset; } }
     public float Speed { get { return speed; } }
     public float SpeedIncrease { get { return speedIncrease; } }
     public int SpeedIncreaseStepInterval { get { return speedIncreaseStepInterval; } }
