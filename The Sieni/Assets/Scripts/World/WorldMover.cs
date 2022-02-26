@@ -25,6 +25,9 @@ public class WorldMover : MonoBehaviour
     private WorldBounds worldBounds;
     public WorldBounds WorldBounds { get { return worldBounds; } }
 
+    [SerializeField]
+    private Material scrollingMaterial;
+
     private List<WorldMoveObject> moveObjects = new List<WorldMoveObject>();
 
     private List<Vector2> spawnPositions = new List<Vector2>();
@@ -52,6 +55,8 @@ public class WorldMover : MonoBehaviour
         worldBounds.DetermineBounds();
         spawnPositions = InitializeSpawnPositions();
         objectPool.Initialize();
+
+        scrollingMaterial.SetFloat("_Offset_X", 0.0f);
     }
 
     void Update()
@@ -64,6 +69,7 @@ public class WorldMover : MonoBehaviour
         MoveObjects();
         SpawnObjects();
         IncreaseSpeed();
+        UpdateScrollingMaterialSpeed();
     }
 
 
@@ -125,6 +131,12 @@ public class WorldMover : MonoBehaviour
             isSpawning = true;
             isMovingObjects = true;
         }
+    }
+
+    private void UpdateScrollingMaterialSpeed()
+    {
+        var offset = scrollingMaterial.GetFloat("_Offset_X");
+        scrollingMaterial.SetFloat("_Offset_X", offset + moveDistance / 2.0f);
     }
 
     private void IncreaseSpeed()
