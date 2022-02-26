@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,13 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager main;
+
+    [SerializeField]
+    private List<EffectDuration> durations;
+
+    private int moveShroomEffectCount = 0;
+    private int visionShroomEffectCount = 0;
+
     private void Awake()
     {
         main = this;
@@ -36,11 +44,15 @@ public class GameManager : MonoBehaviour
         {
             ShroomEffects.Main.SetOnAcid(true);
             RemappableInput.Main.RandomizeDirections();
+            moveShroomEffectCount++;
+            Invoke("EndMoveShroomEffect", getDurationForType(objectType));
         }
         if (objectType == MoveObjectType.VisionShroom)
         {
             ShroomEffects.Main.SetOnAcid(true);
             ShroomEffects.Main.SetDizzyCamera(true);
+            visionShroomEffectCount++;
+            Invoke("EndVisionShroomEffect", getDurationForType(objectType));
         }
     }
 
@@ -53,4 +65,31 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Game over!");
     }
+
+    public void EndMoveShroomEffect() {
+        moveShroomEffectCount--;
+        if (moveShroomEffectCount <= 0) {
+            ShroomEffects.Main.SetOnAcid(false);
+            RemappableInput.Main.ResetDirections();
+        }
+    }
+
+    public void EndVisionShroomEffect() {
+        visionShroomEffectCount--;
+        if (visionShroomEffectCount <= 0) {
+            ShroomEffects.Main.SetOnAcid(false);
+            RemappableInput.Main.ResetDirections();
+        }
+    }
+
+    private float getDurationForType(MoveObjectType type) {
+        return durations.Find(it => it.Type == type).Duration;
+    }
+}
+
+[Serializable]
+public class EffectDuration
+{
+    public MoveObjectType Type;
+    public float Duration;
 }
