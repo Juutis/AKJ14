@@ -12,13 +12,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6afb550071a13bb4884b092a284f5f5d, type: 3}
   m_Name: WorldMoverConfig
   m_EditorClassIdentifier: 
-  speed: 2
+  speed: 1
   speedMax: 10
   bufferZoneSize: 1
   spawns:
-  - moveObject: {fileID: 4714013070266136771, guid: c0ab842ae0b763849aaf6e320ab25316, type: 3}
-    spawnEveryDistance: 1
-    spawnAmount: 3
-  - moveObject: {fileID: 8169129004064319174, guid: c6beb784f9fbb254c9e6d7f65a901484, type: 3}
-    spawnEveryDistance: 3
+  - isEnabled: 1
+    moveObject: {fileID: 4714013070266136771, guid: c0ab842ae0b763849aaf6e320ab25316, type: 3}
+    spawnInterval: 3
+    spawnOffset: 0
     spawnAmount: 1
+    maxSpawns: 4
+    increaseStepInterval: 10
+  - isEnabled: 0
+    moveObject: {fileID: 4714013070266136771, guid: c0ab842ae0b763849aaf6e320ab25316, type: 3}
+    spawnInterval: 1
+    spawnOffset: 1
+    spawnAmount: 1
+    maxSpawns: 8
+    increaseStepInterval: 1
+  - isEnabled: 1
+    moveObject: {fileID: 8169129004064319174, guid: c6beb784f9fbb254c9e6d7f65a901484, type: 3}
+    spawnInterval: 10
+    spawnOffset: 0
+    spawnAmount: 1
+    maxSpawns: 4
+    increaseStepInterval: 1
+  debuggingEnabled: 1
+  debugStepAmount: 20
+  debugStepStart: 0
+  debugDrawEmpty: 1

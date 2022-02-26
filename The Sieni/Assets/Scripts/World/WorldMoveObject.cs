@@ -7,4 +7,6 @@ public class WorldMoveObject : MonoBehaviour
     [SerializeField]
     private WorldMoveObjectConfig moveConfig;
 
+    public MoveObjectType ObjectType { get { return moveConfig.ObjectType; } }
+
 }

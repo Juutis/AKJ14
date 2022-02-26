@@ -5,8 +5,20 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "WorldMoveObjectConfig", menuName = "Configs/New WorldMoveObjectConfig")]
 public class WorldMoveObjectConfig : ScriptableObject
 {
-    private float speed;
-    public float Speed {get {return speed;}}
+    [SerializeField]
+    private MoveObjectType objectType;
+    public MoveObjectType ObjectType { get { return objectType; } }
+
+}
+/*
+[System.Serializable]
+public class MoveObject {
     
-    
+}
+*/
+public enum MoveObjectType
+{
+    None,
+    Shroom,
+    Tree
 }

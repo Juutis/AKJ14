@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a10fef7c65b08df4ba6f60b24481fa4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveConfig: {fileID: 11400000, guid: 0fbc9d51a31f47140916ac34cd365ff6, type: 2}
+  moveConfig: {fileID: 11400000, guid: e84a83921f6c4984884cd9f9306b321a, type: 2}
 --- !u!1 &2161684651775071764
 GameObject:
   m_ObjectHideFlags: 0
