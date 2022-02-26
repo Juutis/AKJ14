@@ -15,29 +15,30 @@ MonoBehaviour:
   speed: 0.5
   speedIncrease: 0.25
   speedIncreaseStepInterval: 5
-  speedMax: 3
+  speedMax: 5
+  worldHeight: 10
   bufferZoneSize: 1
   spawns:
   - isEnabled: 1
     moveObjectType: 2
-    spawnInterval: 2
+    spawnInterval: 7
+    spawnOffset: 15
+    spawnAmount: 1
+    maxSpawns: 1
+    increaseStepInterval: 0
+  - isEnabled: 1
+    moveObjectType: 2
+    spawnInterval: 9
     spawnOffset: 0
     spawnAmount: 1
-    maxSpawns: 4
-    increaseStepInterval: 100
-  - isEnabled: 0
-    moveObjectType: 0
-    spawnInterval: 1
-    spawnOffset: 1
-    spawnAmount: 1
-    maxSpawns: 8
-    increaseStepInterval: 1
+    maxSpawns: 2
+    increaseStepInterval: 20
   - isEnabled: 1
     moveObjectType: 1
-    spawnInterval: 10
-    spawnOffset: 0
+    spawnInterval: 20
+    spawnOffset: 20
     spawnAmount: 1
-    maxSpawns: 4
+    maxSpawns: 1
     increaseStepInterval: 100
   debuggingEnabled: 1
   debugStepAmount: 20

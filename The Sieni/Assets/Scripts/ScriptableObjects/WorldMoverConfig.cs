@@ -20,6 +20,9 @@ public class WorldMoverConfig : ScriptableObject
     private float speedMax;
 
     [SerializeField]
+    private int worldHeight = 10;
+
+    [SerializeField]
     private float bufferZoneSize = 1;
 
     [SerializeField]
@@ -29,6 +32,7 @@ public class WorldMoverConfig : ScriptableObject
     public float SpeedIncrease { get { return speedIncrease; } }
     public int SpeedIncreaseStepInterval { get { return speedIncreaseStepInterval; } }
     public float SpeedMax { get { return speedMax; } }
+    public float WorldHeight { get { return worldHeight; } }
     public float BufferZoneSize { get { return bufferZoneSize; } }
     public List<MoveObjectSpawn> Spawns
     {
@@ -71,11 +75,11 @@ public class MoveObjectSpawn
 
 
     [SerializeField]
-    [Range(1, 20)]
+    [Range(1, 200)]
     private int spawnInterval = 1;
 
     [SerializeField]
-    [Range(0, 20)]
+    [Range(0, 200)]
     private int spawnOffset = 0;
 
     [SerializeField]
@@ -94,7 +98,6 @@ public class MoveObjectSpawn
     public int SpawnOffset { get { return spawnOffset; } }
 
     public MoveObjectType MoveObjectType { get { return moveObjectType; } }
-    //public int SpawnAmount { get { return spawnAmount; } }
 
     public int IncreasedSpawnAmount(int step)
     {
@@ -107,7 +110,7 @@ public class MoveObjectSpawn
         {
             return spawnAmount;
         }
-        int increase = offsetStep / spawnInterval / increaseStepInterval;
+        int increase = offsetStep / increaseStepInterval;
         return System.Math.Clamp(spawnAmount + increase, 0, maxSpawns);
     }
 

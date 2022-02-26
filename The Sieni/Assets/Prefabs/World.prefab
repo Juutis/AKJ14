@@ -95,6 +95,8 @@ GameObject:
   - component: {fileID: 6866678855301099833}
   - component: {fileID: 6866678855301101254}
   - component: {fileID: 5182968184930508913}
+  - component: {fileID: 5589454907514506401}
+  - component: {fileID: 8513748702684776024}
   m_Layer: 0
   m_Name: World
   m_TagString: Untagged
@@ -133,9 +135,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveConfig: {fileID: 11400000, guid: 5b54a43caed3b1848a07f3bbdea13e99, type: 2}
-  worldContainer: {fileID: 6866678855159894895}
   isMoving: 1
   objectPool: {fileID: 5182968184930508913}
+  worldBounds: {fileID: 5589454907514506401}
 --- !u!114 &5182968184930508913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,6 +156,31 @@ MonoBehaviour:
   poolSize: 5
   objectTypes: 0100000002000000
   containerPrefab: {fileID: 6866678855159894895}
+--- !u!114 &5589454907514506401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6866678855301101255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 579068613d2c5384ca174b399d321955, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8513748702684776024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6866678855301101255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24021b39a204edc48a15a58af0619254, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldMover: {fileID: 6866678855301101254}
 --- !u!1001 &2621713734272808151
 PrefabInstance:
   m_ObjectHideFlags: 0
