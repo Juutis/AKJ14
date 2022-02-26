@@ -10,15 +10,18 @@ public class WorldMover : MonoBehaviour
     private Transform worldContainer;
     [SerializeField]
     private bool isMoving = true;
+    private bool isSpawning = false;
+    private bool isMovingObjects = false;
+
     [SerializeField]
-    private bool isSpawning = true;
+    private ObjectPool objectPool;
 
     private List<WorldMoveObject> moveObjects = new List<WorldMoveObject>();
 
     private Bounds bounds;
-
-    [SerializeField]
-    private WorldMoveObject bg;
+    /*
+        [SerializeField]
+        private WorldMoveObject bg;*/
 
     private List<Vector2> spawnPositions = new List<Vector2>();
 
@@ -26,9 +29,25 @@ public class WorldMover : MonoBehaviour
 
     private int currentStep = 0;
 
+    private float speedIncrease = 0f;
+
+    private float moveDistance = 0f;
+
+    private int previousSpeedIncreaseStep = 0;
+
     private void OnDrawGizmos()
     {
 #if UNITY_EDITOR
+        if (Application.isPlaying)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(Vector2.zero,
+                new Vector2(
+                    Mathf.Abs(minUnitySize.x - maxUnitySize.x),
+                    Mathf.Abs(minUnitySize.y - maxUnitySize.y)
+                )
+            );
+        }
         if (Application.isPlaying || moveConfig == null || !moveConfig.DebuggingEnabled || moveConfig.DebugWasDrawn)
         {
             return;
@@ -39,29 +58,21 @@ public class WorldMover : MonoBehaviour
             Gizmos.color = Color.blue;
             Gizmos.DrawSphere(spawnPos, 0.4f);
         }
-        /*Gizmos.color = Color.green;
 
-        Gizmos.DrawSphere(Vector3.zero, 0.5f);
-        Gizmos.color = Color.red;
-        Gizmos.DrawCube(Vector3.up, Vector3.one);
-
-        Gizmos.color = Color.white;*/
-        //Debug.Log("Draw");
         for (int step = 0; step < moveConfig.DebugStepAmount; step += 1)
         {
             List<Vector2> possiblePoints = new List<Vector2>(spawnPositions);
-            //Debug.Log($"Step: {step}");
             foreach (MoveObjectSpawn spawn in moveConfig.Spawns)
             {
                 List<Vector2> spawnPoints = ClaimSpawnPoints(possiblePoints, step + moveConfig.DebugStepStart, spawn, moveConfig.DebugStepStart);
                 foreach (Vector2 spawnPoint in spawnPoints)
                 {
-                    if (spawn.MoveObject.ObjectType == MoveObjectType.Shroom)
+                    if (spawn.MoveObjectType == MoveObjectType.Shroom)
                     {
                         Gizmos.color = Color.magenta;
                         Gizmos.DrawSphere(new Vector2(-moveConfig.DebugStepAmount + spawnPoint.x + step, spawnPoint.y), 0.5f);
                     }
-                    else if (spawn.MoveObject.ObjectType == MoveObjectType.Tree)
+                    else if (spawn.MoveObjectType == MoveObjectType.Tree)
                     {
                         Gizmos.color = Color.green;
                         Gizmos.DrawCube(new Vector2(-moveConfig.DebugStepAmount + spawnPoint.x + step, spawnPoint.y), Vector3.one);
@@ -92,34 +103,54 @@ public class WorldMover : MonoBehaviour
             spawn.PreviousSpawnStep = 0;
         }
         DetermineBounds();
+        objectPool.Initialize();
     }
 
     void Update()
     {
+        CalculateStep();
         MoveObjects();
         SpawnObjects();
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SpawnRandomObject();
-        }
+        IncreaseSpeed();
     }
 
-
-    private void MoveObjects()
+    private void CalculateStep()
     {
         if (isMoving)
         {
-            float step = moveConfig.Speed * Time.deltaTime;
-            for (int objectIndex = 0; objectIndex < moveObjects.Count; objectIndex += 1)
-            {
-                MoveObject(moveObjects[objectIndex], step);
-                CheckObject(moveObjects[objectIndex]);
-            }
-            distanceMoved += step;
+            moveDistance = (speedIncrease + moveConfig.Speed) * Time.deltaTime;
+            distanceMoved += moveDistance;
             if (distanceMoved >= currentStep)
             {
                 currentStep += 1;
                 isSpawning = true;
+                isMovingObjects = true;
+            }
+        }
+    }
+
+
+    private void IncreaseSpeed()
+    {
+        if ((speedIncrease + moveConfig.Speed) >= moveConfig.SpeedMax)
+        {
+            return;
+        }
+        if (currentStep != 0 && previousSpeedIncreaseStep != currentStep && currentStep % moveConfig.SpeedIncreaseStepInterval == 0)
+        {
+            previousSpeedIncreaseStep = currentStep;
+            speedIncrease += moveConfig.SpeedIncrease;
+        }
+    }
+
+    private void MoveObjects()
+    {
+        if (isMovingObjects)
+        {
+            for (int objectIndex = 0; objectIndex < moveObjects.Count; objectIndex += 1)
+            {
+                MoveObject(moveObjects[objectIndex], moveDistance);
+                CheckObject(moveObjects[objectIndex]);
             }
         }
     }
@@ -131,10 +162,15 @@ public class WorldMover : MonoBehaviour
             List<Vector2> possibleSpawnPoints = new List<Vector2>(spawnPositions);
             foreach (MoveObjectSpawn spawn in moveConfig.Spawns)
             {
+                if (spawn.MoveObjectType == MoveObjectType.None)
+                {
+                    Debug.LogWarning($"Spawn object type is None!");
+                    continue;
+                }
                 List<Vector2> claimedPoints = ClaimSpawnPoints(possibleSpawnPoints, currentStep, spawn);
                 foreach (Vector2 spawnPoint in claimedPoints)
                 {
-                    SpawnObject(spawnPoint, spawn.MoveObject);
+                    SpawnObject(spawnPoint, spawn.MoveObjectType);
                 }
             }
             isSpawning = false;
@@ -144,64 +180,70 @@ public class WorldMover : MonoBehaviour
     public void Register(WorldMoveObject moveObject)
     {
         moveObjects.Add(moveObject);
+        moveObject.Wakeup();
     }
 
-    public void Kill(WorldMoveObject moveObject)
+    public void Sleep(WorldMoveObject moveObject)
     {
+        objectPool.Sleep(moveObject);
         moveObjects.Remove(moveObject);
-    }
-
-    private void SpawnRandomObject()
-    {
-        WorldMoveObject bgObject = Instantiate(bg);
-        Register(bgObject);
     }
 
     private void DetermineBounds()
     {
-        Vector2 size = GameViewHelper.GetSize();
-        float width = size.x;
-        float height = size.y;
+        Vector2 screenSize = GameViewHelper.GetSize();
+        float width = screenSize.x;
+        float height = screenSize.y;
 
-        bounds = new Bounds(new Vector3(width / 2, height / 2, 0f), new Vector3(width, height, 0f));
+        Vector3 center = new Vector3(width / 2, height / 2, 0f);
+        Vector3 size = new Vector3(width, height, 0f);
+
+
+
+        bounds = new Bounds(
+            center,
+            size
+        );
+
+        maxUnitySize = Camera.main.ScreenToWorldPoint(bounds.max);
+        minUnitySize = Camera.main.ScreenToWorldPoint(bounds.min);
+        unitySize = Camera.main.ScreenToWorldPoint(bounds.size);
+        unityCenter = Camera.main.ScreenToWorldPoint(bounds.center);
+
         spawnPositions = new List<Vector2>();
         for (float yPos = WorldBoundsMinY(); yPos < WorldBoundsMaxY(); yPos += 1)
         {
             spawnPositions.Add(new Vector2(SpawnX(), yPos + 0.5f));
         }
-        /*foreach (Vector2 spawnPos in spawnPositions)
-        {
-            WorldMoveObject spawnInd = Instantiate(bg);
-            spawnInd.transform.position = spawnPos;
-        }*/
+
     }
 
-    private float BoundsMaxX()
-    {
-        return bounds.max.x;
-    }
+    Vector2 unityCenter;
+    Vector2 unitySize;
+    Vector2 maxUnitySize;
+    Vector2 minUnitySize;
+
     private float WorldBoundsMinY()
     {
-        return Camera.main.ScreenToWorldPoint(bounds.min).y;
+        //return bounds.min.y;
+        return minUnitySize.y;
     }
     private float WorldBoundsMaxY()
     {
-        return Camera.main.ScreenToWorldPoint(bounds.max).y;
+        //return bounds.max.y;
+        return maxUnitySize.y;
     }
 
     private float KillZoneX()
     {
-        return Camera.main.ScreenToWorldPoint(bounds.min).x - moveConfig.BufferZoneSize;
+        //return bounds.max.x - moveConfig.BufferZoneSize;
+        return minUnitySize.x - moveConfig.BufferZoneSize;
     }
 
     private float SpawnX()
     {
-        return Camera.main.ScreenToWorldPoint(bounds.max).x + moveConfig.BufferZoneSize;
-    }
-
-    private float RandomY()
-    {
-        return Random.Range(bounds.min.y, bounds.max.y);
+        //return bounds.max.x + moveConfig.BufferZoneSize;
+        return maxUnitySize.x + moveConfig.BufferZoneSize;
     }
 
     private List<Vector2> ClaimSpawnPoints(List<Vector2> availablePoints, int step, MoveObjectSpawn spawn, int firstStep = 0)
@@ -225,17 +267,17 @@ public class WorldMover : MonoBehaviour
         }
         return newPoints;
     }
-    private void SpawnObject(Vector2 spawnPosition, WorldMoveObject spawnObjectPrefab)
+    private void SpawnObject(Vector2 spawnPosition, MoveObjectType spawnObjectType)
     {
-        WorldMoveObject spawnedObject = Instantiate(spawnObjectPrefab);
+        WorldMoveObject spawnedObject = objectPool.Get(spawnObjectType);
         spawnedObject.transform.position = spawnPosition;
         Register(spawnedObject);
     }
 
-    private void MoveObject(WorldMoveObject moveObject, float step)
+    private void MoveObject(WorldMoveObject moveObject, float moveDistance)
     {
         Vector2 newPos = moveObject.transform.position;
-        newPos.x -= step;
+        newPos.x -= moveDistance;
         moveObject.transform.position = newPos;
     }
 
@@ -243,7 +285,7 @@ public class WorldMover : MonoBehaviour
     {
         if (moveObject.transform.position.x < KillZoneX())
         {
-            Kill(moveObject);
+            Sleep(moveObject);
         }
     }
 }

@@ -12,31 +12,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6afb550071a13bb4884b092a284f5f5d, type: 3}
   m_Name: WorldMoverConfig
   m_EditorClassIdentifier: 
-  speed: 1
-  speedMax: 10
+  speed: 0.5
+  speedIncrease: 0.25
+  speedIncreaseStepInterval: 5
+  speedMax: 3
   bufferZoneSize: 1
   spawns:
   - isEnabled: 1
-    moveObject: {fileID: 4714013070266136771, guid: c0ab842ae0b763849aaf6e320ab25316, type: 3}
-    spawnInterval: 3
+    moveObjectType: 2
+    spawnInterval: 2
     spawnOffset: 0
     spawnAmount: 1
     maxSpawns: 4
-    increaseStepInterval: 10
+    increaseStepInterval: 100
   - isEnabled: 0
-    moveObject: {fileID: 4714013070266136771, guid: c0ab842ae0b763849aaf6e320ab25316, type: 3}
+    moveObjectType: 0
     spawnInterval: 1
     spawnOffset: 1
     spawnAmount: 1
     maxSpawns: 8
     increaseStepInterval: 1
   - isEnabled: 1
-    moveObject: {fileID: 8169129004064319174, guid: c6beb784f9fbb254c9e6d7f65a901484, type: 3}
+    moveObjectType: 1
     spawnInterval: 10
     spawnOffset: 0
     spawnAmount: 1
     maxSpawns: 4
-    increaseStepInterval: 1
+    increaseStepInterval: 100
   debuggingEnabled: 1
   debugStepAmount: 20
   debugStepStart: 0

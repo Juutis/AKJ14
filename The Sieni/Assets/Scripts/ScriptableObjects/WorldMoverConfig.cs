@@ -9,6 +9,13 @@ public class WorldMoverConfig : ScriptableObject
     [Header("General")]
     [SerializeField]
     private float speed;
+
+    [SerializeField]
+    [Range(0, 1)]
+    private float speedIncrease;
+    [SerializeField]
+    [Range(1, 1000)]
+    private int speedIncreaseStepInterval;
     [SerializeField]
     private float speedMax;
 
@@ -19,6 +26,8 @@ public class WorldMoverConfig : ScriptableObject
     private List<MoveObjectSpawn> spawns = new List<MoveObjectSpawn>();
 
     public float Speed { get { return speed; } }
+    public float SpeedIncrease { get { return speedIncrease; } }
+    public int SpeedIncreaseStepInterval { get { return speedIncreaseStepInterval; } }
     public float SpeedMax { get { return speedMax; } }
     public float BufferZoneSize { get { return bufferZoneSize; } }
     public List<MoveObjectSpawn> Spawns
@@ -58,7 +67,8 @@ public class MoveObjectSpawn
     private bool isEnabled = true;
 
     [SerializeField]
-    private WorldMoveObject moveObject;
+    private MoveObjectType moveObjectType;
+
 
     [SerializeField]
     [Range(1, 20)]
@@ -76,14 +86,14 @@ public class MoveObjectSpawn
     [Range(1, 8)]
     private int maxSpawns = 8;
     [SerializeField]
-    [Range(0, 100)]
+    [Range(0, 1000)]
     private int increaseStepInterval = 1;
     private int previousSpawnStep = 0;
     public bool IsEnabled { get { return isEnabled; } }
     public int SpawnInterval { get { return spawnInterval; } }
     public int SpawnOffset { get { return spawnOffset; } }
 
-    public WorldMoveObject MoveObject { get { return moveObject; } }
+    public MoveObjectType MoveObjectType { get { return moveObjectType; } }
     //public int SpawnAmount { get { return spawnAmount; } }
 
     public int IncreasedSpawnAmount(int step)
