@@ -9,6 +9,7 @@ public class ShroomEffects : MonoBehaviour
     public static ShroomEffects Main;
 
     private AcidEffect acid;
+    private DizzyCamera dizzyCamera;
 
     void Awake() {
         Main = this;
@@ -18,6 +19,7 @@ public class ShroomEffects : MonoBehaviour
     void Start()
     {
         acid = GetComponent<AcidEffect>();
+        dizzyCamera = GetComponent<DizzyCamera>();
     }
 
     // Update is called once per frame
@@ -26,7 +28,7 @@ public class ShroomEffects : MonoBehaviour
     }
 
     public void SetDizzyCamera(bool active) {
-
+        dizzyCamera.SetDizzy(active);
     }
 
     public void SetOnAcid(bool onAcid) {
