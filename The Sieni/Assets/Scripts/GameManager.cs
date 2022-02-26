@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
         {
             ShroomEffects.Main.SetOnAcid(true);
             RemappableInput.Main.RandomizeDirections();
+            UIManager.main.RemapButtons();
         }
         if (objectType == MoveObjectType.VisionShroom)
         {
