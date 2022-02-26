@@ -139,7 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 963e3df6b54d48944b019eb054b6612f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  moveSpeed: 6
   triggerInputRemappingForDebugPurposes: 0
   triggerInputResetForDebugPurposes: 0
 --- !u!114 &1320694421330516314
