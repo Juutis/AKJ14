@@ -161,7 +161,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1320694421330516313}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 7427362bcb9d8224e977adcf56062b76, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -184,7 +184,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 7427362bcb9d8224e977adcf56062b76, type: 2}
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -517,6 +517,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7494498072800448246, guid: 5c5c82cea674e684881eb8c240350d53, type: 3}
+      propertyPath: additionalEffects
+      value: 
+      objectReference: {fileID: 4408642418371038670}
+    - target: {fileID: 7494498072800448246, guid: 5c5c82cea674e684881eb8c240350d53, type: 3}
       propertyPath: volumes.Array.data[0]
       value: 
       objectReference: {fileID: 9136309254693784192}
@@ -600,6 +604,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 694fb3d6ddea16f43b99e1626c9c3368, type: 3}
+--- !u!114 &4408642418371038670 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7019067261332794745, guid: 694fb3d6ddea16f43b99e1626c9c3368, type: 3}
+  m_PrefabInstance: {fileID: 6649028939478540471}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &4550582113456313553 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7160990339185407078, guid: 694fb3d6ddea16f43b99e1626c9c3368, type: 3}

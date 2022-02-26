@@ -14,6 +14,9 @@ public class AcidEffect : MonoBehaviour
     private List<Volume> volumes;
 
     [SerializeField]
+    private Volume additionalEffects;
+
+    [SerializeField]
     private bool debugActivateAcid;
 
     [SerializeField]
@@ -83,5 +86,6 @@ public class AcidEffect : MonoBehaviour
             var contribution = Mathf.Lerp(0.0f, originalContribution, t);
             lookup.contribution.Override(contribution);
         }
+        additionalEffects.weight = intensity;
     }
 }
