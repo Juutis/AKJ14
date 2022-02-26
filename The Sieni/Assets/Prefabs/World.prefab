@@ -46,9 +46,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   durations:
   - Type: 2
-    Duration: 5
+    Duration: 8
   - Type: 3
-    Duration: 3
+    Duration: 6
 --- !u!1 &4198376794926535567
 GameObject:
   m_ObjectHideFlags: 0
