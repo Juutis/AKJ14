@@ -80,6 +80,7 @@ public class GameManager : MonoBehaviour
             if (totalEffectCount <= 0) {
                 ShroomEffects.Main.SetOnAcid(false);
             }
+            UIManager.main.RemapButtons();
         }
     }
 
