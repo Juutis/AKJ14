@@ -26,8 +26,6 @@ public class PlayerInput : MonoBehaviour
         var up = Camera.main.transform.up.normalized;
         var right = Camera.main.transform.right.normalized;
         rb.velocity = (input.x * right + input.y * up) * moveSpeed;
-        
-        Debug.Log(rb.velocity);
     }
 
     // Update is called once per frame
