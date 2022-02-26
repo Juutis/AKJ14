@@ -22,5 +22,6 @@ public enum MoveObjectType
     RegularShroom,
     VisionShroom,
     MoveShroom,
-    Tree
+    Tree,
+    Decoration
 }
