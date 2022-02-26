@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
         if (objectType == MoveObjectType.VisionShroom)
         {
             ShroomEffects.Main.SetOnAcid(true);
-            // call CameraRotator
+            ShroomEffects.Main.SetDizzyCamera(true);
         }
     }
 

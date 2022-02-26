@@ -54,7 +54,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _EnableExternalAlpha: 0
-    - _Offset_X: 5.314449
+    - _Offset_X: 6.0555215
     - _Speed_X: 0.5
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
