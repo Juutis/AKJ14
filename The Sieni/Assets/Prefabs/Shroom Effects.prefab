@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2777440198176878012}
+  - component: {fileID: 9055442583651582121}
   m_Layer: 0
   m_Name: Shroom Effects
   m_TagString: Untagged
@@ -32,6 +33,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9055442583651582121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2777440198176878015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 842ebe9207c23ac4b88ee3349b0bb66b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  acidFadeSpeed: 5
+  volumes: []
+  debugActivateAcid: 0
+  debugDeactivateAcid: 0
 --- !u!1 &2777440198222162581
 GameObject:
   m_ObjectHideFlags: 0
