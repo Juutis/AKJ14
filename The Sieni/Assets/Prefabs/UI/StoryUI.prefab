@@ -1155,6 +1155,10 @@ MonoBehaviour:
   MoveShroomText: {fileID: 8100524382946732028}
   VisionShroomText: {fileID: 3903038083705353116}
   DisableInputsShroomText: {fileID: 4529739597747778108}
+  MoveShroomCanvas: {fileID: 6764005070028707419}
+  VisionShroomCanvas: {fileID: 5162088378201182369}
+  DisableInputShroomCanvas: {fileID: 5208047535842969335}
+  RequirementFullfilledColor: {r: 0.08627451, g: 1, b: 0, a: 1}
 --- !u!1 &8826426803094918602
 GameObject:
   m_ObjectHideFlags: 0

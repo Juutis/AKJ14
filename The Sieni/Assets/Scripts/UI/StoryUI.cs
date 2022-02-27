@@ -13,7 +13,18 @@ public class StoryUI : MonoBehaviour
     private Text VisionShroomText;
 
     [SerializeField]
-    private Text DisableInputsShroomText;    
+    private Text DisableInputsShroomText;
+
+
+    [SerializeField]
+    private Image MoveShroomCanvas;
+    [SerializeField]
+    private Image VisionShroomCanvas;
+    [SerializeField]
+    private Image DisableInputShroomCanvas;
+
+    [SerializeField]
+    private Color RequirementFullfilledColor;
 
     // Start is called before the first frame update
     void Start()
@@ -34,15 +45,19 @@ public class StoryUI : MonoBehaviour
     }
 
     public void UpdateTexts() {
-        UpdateText(MoveShroomText, MoveObjectType.MoveShroom);
-        UpdateText(VisionShroomText, MoveObjectType.VisionShroom);
-        UpdateText(DisableInputsShroomText, MoveObjectType.DisableControlShroom);
+        UpdateText(MoveShroomText, MoveObjectType.MoveShroom, MoveShroomCanvas);
+        UpdateText(VisionShroomText, MoveObjectType.VisionShroom, VisionShroomCanvas);
+        UpdateText(DisableInputsShroomText, MoveObjectType.DisableControlShroom, DisableInputShroomCanvas);
     }
 
-    private void UpdateText(Text text, MoveObjectType type) {
+    private void UpdateText(Text text, MoveObjectType type, Image canvas) {
         var count = GameManager.main.GetCollectedCount(type);
         var required = GameManager.main.shroomsRequiredForWin.Find(it => it.Type == type).Count;
         var textValue = count + "/" + required;
         text.text = textValue;
+
+        if (count >= required) {
+            canvas.color = RequirementFullfilledColor;
+        }
     }
 }
