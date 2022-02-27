@@ -52,6 +52,19 @@ public class WorldMoveObject : MonoBehaviour
 
     public void Kill()
     {
+        if (moveConfig.ObjectType == MoveObjectType.Bird)
+        {
+            foreach (GameObject style in possibleStyles)
+            {
+                foreach (Transform child in style.transform)
+                {
+                    if (child.TryGetComponent<Bird>(out Bird bird))
+                    {
+                        bird.Die();
+                    }
+                }
+            }
+        }
         WorldMover.main.Sleep(this);
     }
 

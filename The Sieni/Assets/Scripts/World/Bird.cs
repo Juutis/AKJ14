@@ -34,14 +34,14 @@ public class Bird : MonoBehaviour
         {
             animator.Play("BirdFly");
             fly = true;
-            Invoke("Die", 10);
+            //Invoke("Die", 10);
         }
     }
 
-    void Die()
+    public void Die()
     {
         fly = false;
-        transform.position = Vector3.zero;
-            animator.Play("BirdIdle");
+        transform.localPosition = Vector3.zero;
+        animator.Play("BirdIdle");
     }
 }
