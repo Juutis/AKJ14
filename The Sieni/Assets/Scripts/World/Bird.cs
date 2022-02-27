@@ -34,7 +34,6 @@ public class Bird : MonoBehaviour
         {
             animator.Play("BirdFly");
             fly = true;
-            //Invoke("Die", 10);
         }
     }
 
@@ -46,7 +45,7 @@ public class Bird : MonoBehaviour
         {
             fly = false;
             transform.localPosition = Vector3.zero;
-            // animator.Play("BirdIdle");
+            // reset animation state
             animator.Rebind();
             animator.Update(0f);
         }
