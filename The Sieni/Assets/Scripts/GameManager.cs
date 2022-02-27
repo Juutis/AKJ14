@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -10,13 +11,21 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private List<EffectDuration> durations;
 
+    [SerializeField]
+    private List<ShroomMultiplierIncrement> multipliers;
+
     private int moveShroomEffectCount = 0;
     private int visionShroomEffectCount = 0;
 
     private int moveShroomsEaten = 0;
 
-    private int totalEffectCount {
-        get {
+    private int scoreMultiplier = 1;
+    private int totalScore = 0;
+
+    private int totalEffectCount
+    {
+        get
+        {
             return moveShroomEffectCount + visionShroomEffectCount;
         }
     }
@@ -30,6 +39,7 @@ public class GameManager : MonoBehaviour
     {
         MoveObjectType objectType = moveObject.ObjectType;
         PlayerParticles.main.PlayParticles(objectType); // plays particle effects if type has one defined
+        GainMultiplier(objectType); // Gain a multiplier if it's defined
 
         if (objectType == MoveObjectType.Tree)
         {
@@ -67,7 +77,15 @@ public class GameManager : MonoBehaviour
 
     public void GainScore(int score)
     {
-        Debug.Log($"Gained {score} score!");
+        Debug.Log($"Gained {score * scoreMultiplier} score! Now you have {totalScore}!");
+        totalScore += score * scoreMultiplier;
+        UIManager.main.UpdateScore(scoreMultiplier, totalScore);
+    }
+
+    public void GainMultiplier(MoveObjectType objectType)
+    {
+        scoreMultiplier += multipliers.FirstOrDefault(x => x.Type == objectType)?.Multiplier ?? 0;
+        UIManager.main.UpdateScore(scoreMultiplier, totalScore);
     }
 
     public void GameOver()
@@ -75,41 +93,57 @@ public class GameManager : MonoBehaviour
         Debug.Log("Game over!");
     }
 
-    public void EndMoveShroomEffect() {
+    public void EndMoveShroomEffect()
+    {
         moveShroomEffectCount--;
-        if (moveShroomEffectCount <= 0) {
+        if (moveShroomEffectCount <= 0)
+        {
             RemappableInput.Main.ResetDirections();
-            if (totalEffectCount <= 0) {
+            if (totalEffectCount <= 0)
+            {
                 ShroomEffects.Main.SetOnAcid(false);
             }
             UIManager.main.RemapButtons();
         }
     }
 
-    public void EndVisionShroomEffect() {
+    public void EndVisionShroomEffect()
+    {
         visionShroomEffectCount--;
-        if (visionShroomEffectCount <= 0) {
+        if (visionShroomEffectCount <= 0)
+        {
             ShroomEffects.Main.SetDizzyCamera(false);
-            if (totalEffectCount <= 0) {
+            if (totalEffectCount <= 0)
+            {
                 ShroomEffects.Main.SetOnAcid(false);
             }
         }
     }
 
-    private float getDurationForType(MoveObjectType type) {
+    private float getDurationForType(MoveObjectType type)
+    {
         return durations.Find(it => it.Type == type).Duration;
     }
 
-    private void changeControls() {
-        if (moveShroomsEaten < 5) {
-            if (UnityEngine.Random.Range(0.0f, 1.0f) < 0.50f) {
+    private void changeControls()
+    {
+        if (moveShroomsEaten < 5)
+        {
+            if (UnityEngine.Random.Range(0.0f, 1.0f) < 0.50f)
+            {
                 RemappableInput.Main.InvertHorizontalControls();
-            } else {
+            }
+            else
+            {
                 RemappableInput.Main.InvertVerticalControls();
             }
-        } else if (moveShroomsEaten < 10) {
+        }
+        else if (moveShroomsEaten < 10)
+        {
             RemappableInput.Main.InvertControls();
-        } else {
+        }
+        else
+        {
             RemappableInput.Main.RandomizeDirections();
         }
         moveShroomsEaten++;
@@ -121,4 +155,11 @@ public class EffectDuration
 {
     public MoveObjectType Type;
     public float Duration;
+}
+
+[Serializable]
+public class ShroomMultiplierIncrement
+{
+    public MoveObjectType Type;
+    public int Multiplier;
 }

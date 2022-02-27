@@ -14,6 +14,8 @@ public class UIManager : MonoBehaviour
     private UIConfig uiConfig;
     [SerializeField]
     private UIShroomPopup uiShroomPopup;
+    [SerializeField]
+    private UIScore uiScore;
 
 
     void Start()
@@ -30,6 +32,11 @@ public class UIManager : MonoBehaviour
     {
         //uiShroomPopup.HighlightMoveButtons(input);
         uiShroomPopup.HighlightTraditional();
+    }
+
+    public void UpdateScore(int multiplier, int totalScore)
+    {
+        uiScore.UpdateScore(multiplier, totalScore);
     }
 }
 
