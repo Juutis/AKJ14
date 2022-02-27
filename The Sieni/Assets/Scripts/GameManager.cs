@@ -48,10 +48,6 @@ public class GameManager : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Restart();
-        }
     }
 
     public void CollectWorldObject(WorldMoveObject moveObject)
@@ -258,7 +254,7 @@ public class GameManager : MonoBehaviour
             if (GetCollectedCount(winRequirement.Type) < winRequirement.Count) return;
         }
 
-        // Debug.Log("WIN!");
+        UIManager.main.ShowWin();
     }
 
     public void Restart()

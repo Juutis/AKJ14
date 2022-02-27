@@ -28,6 +28,9 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Transform popContainer;
 
+    [SerializeField]
+    private UIGameOver WinUI;
+
     void Start()
     {
         uiShroomPopup.InitializeButtons(uiConfig.UIMoveButtons);
@@ -48,6 +51,7 @@ public class UIManager : MonoBehaviour
     {
         uiScore.UpdateScore(multiplier, totalScore);
         uiGameOver.UpdateScore(multiplier, totalScore, collectedShrooms);
+        WinUI.UpdateScore(multiplier, totalScore, collectedShrooms);
     }
 
 
@@ -66,6 +70,11 @@ public class UIManager : MonoBehaviour
     public void ShowGameOver()
     {
         uiGameOver.gameObject.SetActive(true);
+        storyUI.gameObject.SetActive(false);
+    }
+
+    public void ShowWin() {
+        WinUI.gameObject.SetActive(true);
         storyUI.gameObject.SetActive(false);
     }
 }
