@@ -171,14 +171,7 @@ public class GameManager : MonoBehaviour
     {
         if (moveShroomsEaten < 5)
         {
-            if (UnityEngine.Random.Range(0.0f, 1.0f) < 0.50f)
-            {
-                RemappableInput.Main.InvertHorizontalControls();
-            }
-            else
-            {
-                RemappableInput.Main.InvertVerticalControls();
-            }
+            RemappableInput.Main.InvertRandomAxis();
         }
         else if (moveShroomsEaten < 10)
         {

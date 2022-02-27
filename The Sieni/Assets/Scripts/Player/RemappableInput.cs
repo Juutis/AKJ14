@@ -58,20 +58,37 @@ public class RemappableInput : MonoBehaviour
     }
 
     public void InvertControls() {
+        var left = mappedDirections[INPUT_LEFT];
+        var right = mappedDirections[INPUT_RIGHT];
+        var up = mappedDirections[INPUT_UP];
+        var down = mappedDirections[INPUT_DOWN];
         mappedDirections = new Dictionary<InputDirection, MappedDirection> {
-            { INPUT_RIGHT, DIR_LEFT },
-            { INPUT_LEFT, DIR_RIGHT },
-            { INPUT_UP, DIR_DOWN },
-            { INPUT_DOWN, DIR_UP }
+            { INPUT_RIGHT, left },
+            { INPUT_LEFT, right },
+            { INPUT_UP, down },
+            { INPUT_DOWN, up }
         };
 
         debugInputs();
     }
 
+    public void InvertRandomAxis() {
+        if (INPUT_LEFT.Enabled && INPUT_RIGHT.Enabled && Random.Range(0.0f, 1.0f) < 0.50f)
+        {
+            RemappableInput.Main.InvertHorizontalControls();
+        }
+        else
+        {
+            RemappableInput.Main.InvertVerticalControls();
+        }
+    }
+    
     public void InvertHorizontalControls() {
+        var left = mappedDirections[INPUT_LEFT];
+        var right = mappedDirections[INPUT_RIGHT];
         mappedDirections = new Dictionary<InputDirection, MappedDirection> {
-            { INPUT_RIGHT, DIR_LEFT },
-            { INPUT_LEFT, DIR_RIGHT },
+            { INPUT_RIGHT, left },
+            { INPUT_LEFT, right },
             { INPUT_UP, DIR_UP },
             { INPUT_DOWN, DIR_DOWN }
         };
@@ -80,11 +97,13 @@ public class RemappableInput : MonoBehaviour
     }
 
     public void InvertVerticalControls() {
+        var up = mappedDirections[INPUT_UP];
+        var down = mappedDirections[INPUT_DOWN];
         mappedDirections = new Dictionary<InputDirection, MappedDirection> {
             { INPUT_RIGHT, DIR_RIGHT },
             { INPUT_LEFT, DIR_LEFT },
-            { INPUT_UP, DIR_DOWN },
-            { INPUT_DOWN, DIR_UP }
+            { INPUT_UP, down },
+            { INPUT_DOWN, up }
         };
 
         debugInputs();

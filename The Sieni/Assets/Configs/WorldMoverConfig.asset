@@ -57,14 +57,14 @@ MonoBehaviour:
     increaseStepInterval: 0
   - isEnabled: 1
     moveObjectType: 4
-    spawnInterval: 6
-    spawnOffset: 15
+    spawnInterval: 4
+    spawnOffset: 20
     spawnAmount: 1
     maxSpawns: 3
     increaseStepInterval: 150
   - isEnabled: 1
     moveObjectType: 4
-    spawnInterval: 11
+    spawnInterval: 7
     spawnOffset: 200
     spawnAmount: 1
     maxSpawns: 2
