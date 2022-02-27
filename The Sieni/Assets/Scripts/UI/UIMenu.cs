@@ -1,0 +1,150 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using System.Linq;
+
+public class UIMenu : MonoBehaviour
+{
+    public static UIMenu main;
+    private void Awake()
+    {
+        main = this;
+    }
+
+    [SerializeField]
+    private List<UIMenuSelection> selections = new List<UIMenuSelection>();
+
+    private int selectorIndex = 0;
+
+    private UIMenuSelection CurrentSelection;
+
+    [SerializeField]
+    private Animator animator;
+
+    [SerializeField]
+    private bool isMainMenu;
+
+    void Start()
+    {
+#if UNITY_WEBGL || UNITY_EDITOR
+        UIMenuSelection quitSelection = selections.FirstOrDefault(selection => selection.SelectionType == UISelectionType.Exit);
+        selections.Remove(quitSelection);
+        quitSelection.gameObject.SetActive(false);
+#endif
+        if (isMainMenu)
+        {
+            UIMenuSelection mmSelection = selections.FirstOrDefault(selection => selection.SelectionType == UISelectionType.MainMenu);
+            UIMenuSelection restartSelection = selections.FirstOrDefault(selection => selection.SelectionType == UISelectionType.Restart);
+            selections.Remove(mmSelection);
+            mmSelection.gameObject.SetActive(false);
+            selections.Remove(restartSelection);
+            restartSelection.gameObject.SetActive(false);
+        }
+        else
+        {
+            UIMenuSelection storySelection = selections.FirstOrDefault(selection => selection.SelectionType == UISelectionType.Story);
+            UIMenuSelection endlessSelection = selections.FirstOrDefault(selection => selection.SelectionType == UISelectionType.Endless);
+            selections.Remove(storySelection);
+            storySelection.gameObject.SetActive(false);
+            selections.Remove(endlessSelection);
+            endlessSelection.gameObject.SetActive(false);
+        }
+        int index = 0;
+        foreach (UIMenuSelection selection in selections)
+        {
+            selection.SetSelected(selectorIndex == index);
+            index += 1;
+        }
+    }
+
+    public void MoveSelector(bool directionDown)
+    {
+        if (directionDown)
+        {
+            if (selectorIndex < selections.Count - 1)
+            {
+                selectorIndex += 1;
+            }
+            else
+            {
+                return;
+            }
+        }
+        else
+        {
+            if (selectorIndex > 0)
+            {
+                selectorIndex -= 1;
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        CurrentSelection = selections[selectorIndex];
+        foreach (UIMenuSelection selection in selections)
+        {
+            if (selection.IsSelected)
+            {
+                selection.SetSelected(false);
+            }
+        }
+        CurrentSelection.SetSelected(true);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+        {
+            MoveSelector(true);
+        }
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+        {
+            MoveSelector(false);
+        }
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            Select();
+        }
+    }
+
+    public void Select()
+    {
+        selectorIndex = 0;
+        UISelectionType selectionType = CurrentSelection.SelectionType;
+        if (selectionType == UISelectionType.Story)
+        {
+            SceneManager.LoadScene(1);
+        }
+        if (selectionType == UISelectionType.Endless)
+        {
+            SceneManager.LoadScene(2);
+        }
+        if (selectionType == UISelectionType.Exit)
+        {
+            Application.Quit();
+        }
+        if (selectionType == UISelectionType.MainMenu)
+        {
+            SceneManager.LoadScene(0);
+        }
+        if (selectionType == UISelectionType.Restart)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+    }
+
+}
+
+
+public enum UISelectionType
+{
+    Story,
+    Endless,
+    Exit,
+    MainMenu,
+    Restart
+}
