@@ -753,6 +753,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalMusicClip: {fileID: 8300000, guid: 62311bb82ea622e469e4b0d3b732a654, type: 3}
   acidMusicClip: {fileID: 8300000, guid: 4b7b0c2471a90fb4287a93363ceb7133, type: 3}
+  acidPitch: 0.95
   musicVolumeNormal: 0.5
   musicVolumeAcid: 0.5
   crossfadeDurationOut: 0.5
