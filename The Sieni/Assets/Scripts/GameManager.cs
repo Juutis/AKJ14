@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
             playerInput.Stop();
             Debug.Log("You hit a tree!");
             WorldMover.main.IsMoving = false;
+            SoundManager.main.PlaySound(GameSoundType.Hit);
             GameOver();
         }
         else
@@ -62,6 +63,7 @@ public class GameManager : MonoBehaviour
             GainScore(score);
             Vector3 offset = new Vector3(0, 1f, 0f);
             UIManager.main.ShowPoppingMessage(PlayerInput.main.transform.position + offset, $"+{score}");
+            SoundManager.main.PlaySound(GameSoundType.PickupRegular);
         }
         if (objectType == MoveObjectType.MoveShroom)
         {
@@ -70,6 +72,8 @@ public class GameManager : MonoBehaviour
             moveShroomEffectCount++;
             Invoke("EndMoveShroomEffect", getDurationForType(objectType));
             UIManager.main.RemapButtons();
+            SoundManager.main.PlaySound(GameSoundType.PickupMovement);
+            MusicPlayer.main.SwitchMusic(false);
         }
         if (objectType == MoveObjectType.VisionShroom)
         {
@@ -77,6 +81,8 @@ public class GameManager : MonoBehaviour
             ShroomEffects.Main.SetDizzyCamera(true);
             visionShroomEffectCount++;
             Invoke("EndVisionShroomEffect", getDurationForType(objectType));
+            SoundManager.main.PlaySound(GameSoundType.PickupVision);
+            MusicPlayer.main.SwitchMusic(false);
         }
         if (objectType == MoveObjectType.DisableControlShroom)
         {
@@ -85,6 +91,8 @@ public class GameManager : MonoBehaviour
             disableControlsShroomEffectCount++;
             Invoke("EndDisableControlsShroomEffect", getDurationForType(objectType));
             UIManager.main.RemapButtons();
+            SoundManager.main.PlaySound(GameSoundType.PickupButton);
+            MusicPlayer.main.SwitchMusic(false);
         }
     }
 
@@ -111,12 +119,14 @@ public class GameManager : MonoBehaviour
         moveShroomEffectCount--;
         if (moveShroomEffectCount <= 0)
         {
-            if (disableControlsShroomEffectCount <= 0) {
+            if (disableControlsShroomEffectCount <= 0)
+            {
                 RemappableInput.Main.ResetDirections();
             }
             if (totalEffectCount <= 0)
             {
                 ShroomEffects.Main.SetOnAcid(false);
+                MusicPlayer.main.SwitchMusic(true);
             }
             UIManager.main.RemapButtons();
         }
@@ -131,20 +141,26 @@ public class GameManager : MonoBehaviour
             if (totalEffectCount <= 0)
             {
                 ShroomEffects.Main.SetOnAcid(false);
+                MusicPlayer.main.SwitchMusic(true);
             }
         }
     }
 
-    public void EndDisableControlsShroomEffect() {
+    public void EndDisableControlsShroomEffect()
+    {
         disableControlsShroomEffectCount--;
-        if (disableControlsShroomEffectCount <= 0) {
+        if (disableControlsShroomEffectCount <= 0)
+        {
             RemappableInput.Main.EnableHorizontalControls();
-            if (moveShroomEffectCount <= 0) {
+            if (moveShroomEffectCount <= 0)
+            {
                 RemappableInput.Main.ResetDirections();
                 UIManager.main.RemapButtons();
             }
-            if (totalEffectCount <= 0) {
+            if (totalEffectCount <= 0)
+            {
                 ShroomEffects.Main.SetOnAcid(false);
+                MusicPlayer.main.SwitchMusic(true);
             }
         }
     }
@@ -178,10 +194,14 @@ public class GameManager : MonoBehaviour
         moveShroomsEaten++;
     }
 
-    private void disableControls() {
-        if (disableControlsShroomsEaten < 5) {
+    private void disableControls()
+    {
+        if (disableControlsShroomsEaten < 5)
+        {
             RemappableInput.Main.DisableHorizontalControls();
-        } else {
+        }
+        else
+        {
             RemappableInput.Main.DisableHorizontalControls();
             RemappableInput.Main.SwapHorizontalAndVerticalControls();
         }
