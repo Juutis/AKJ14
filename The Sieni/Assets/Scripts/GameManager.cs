@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -43,6 +44,12 @@ public class GameManager : MonoBehaviour
     {
         main = this;
         collectedShrooms = new Dictionary<MoveObjectType, int>();
+    }
+
+    public void Update() {
+        if (Input.GetKeyDown(KeyCode.R)) {
+            Restart();
+        }
     }
 
     public void CollectWorldObject(WorldMoveObject moveObject)
@@ -249,6 +256,10 @@ public class GameManager : MonoBehaviour
         }
 
         Debug.Log("WIN!");
+    }
+
+    public void Restart() {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
 
