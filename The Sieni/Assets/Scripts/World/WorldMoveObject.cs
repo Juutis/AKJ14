@@ -92,7 +92,6 @@ public class WorldMoveObject : MonoBehaviour
         yield return new WaitForSeconds(3f);
         bird.Die();
         yield return new WaitForSeconds(1f);
-        WorldMover.main.Sleep(this);
         if (pool != null)
         {
             pool.Sleep(this);
