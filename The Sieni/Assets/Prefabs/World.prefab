@@ -80,6 +80,8 @@ MonoBehaviour:
     Duration: 8
   - Type: 3
     Duration: 6
+  - Type: 6
+    Duration: 7
   multipliers:
   - Type: 1
     Multiplier: 0
@@ -87,6 +89,8 @@ MonoBehaviour:
     Multiplier: 1
   - Type: 3
     Multiplier: 2
+  - Type: 6
+    Multiplier: 1
 --- !u!1 &4198376794926535567
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,8 +253,9 @@ MonoBehaviour:
   - {fileID: 734142666506931786, guid: f14c5e8b5eb4eeb4e8dc61db24a62d35, type: 3}
   - {fileID: 734142666506931786, guid: 2d3f66dff4c79f4458fe0d7225bce8c0, type: 3}
   - {fileID: 3082554835777583606, guid: 522fd581178e8274587eb56996047f66, type: 3}
+  - {fileID: 734142666506931786, guid: bb6f916ea565ddf4783755b8da1c976a, type: 3}
   poolSize: 5
-  objectTypes: 0100000002000000030000000400000005000000
+  objectTypes: 010000000200000003000000040000000500000006000000
   containerPrefab: {fileID: 6866678855159894895}
 --- !u!114 &5589454907514506401
 MonoBehaviour:
@@ -293,7 +298,6 @@ MonoBehaviour:
   objectPool: {fileID: 5182968184930508913}
   worldMover: {fileID: 6866678855301101254}
   container: {fileID: 5872941564416811083}
-  moveObjects: []
 --- !u!1001 &2621713734272808151
 PrefabInstance:
   m_ObjectHideFlags: 0

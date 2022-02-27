@@ -62,6 +62,13 @@ MonoBehaviour:
     spawnAmount: 2
     maxSpawns: 2
     increaseStepInterval: 0
+  - isEnabled: 1
+    moveObjectType: 6
+    spawnInterval: 27
+    spawnOffset: 30
+    spawnAmount: 1
+    maxSpawns: 1
+    increaseStepInterval: 0
   debuggingEnabled: 1
   debugStepAmount: 20
   debugStepStart: 0

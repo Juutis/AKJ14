@@ -28,6 +28,11 @@ public class AcidEffect : MonoBehaviour
     private List<ColorLookup> colorLookups = new List<ColorLookup>();
     private List<float> originalContributions = new List<float>();
 
+    private LensDistortion lensDistortion;
+    private float origLensDistortionIntensity;
+    private float throbbingIntensity = 0.25f;
+    private float throbbingFrequency = 2.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +44,8 @@ public class AcidEffect : MonoBehaviour
             colorLookups.Add(colorLookup);
             originalContributions.Add(colorLookup.contribution.value);
         });
+
+        if (!additionalEffects.profile.TryGet(out lensDistortion)) throw new System.NullReferenceException(nameof(lensDistortion));
 
         setAcidIntensity(acidIntensity);
     }
@@ -68,6 +75,8 @@ public class AcidEffect : MonoBehaviour
             }
         }
         setAcidIntensity(acidIntensity);
+
+        handleThrobbing();
     }
 
     public void SetOnAcid(bool onAcid) {
@@ -87,5 +96,10 @@ public class AcidEffect : MonoBehaviour
             lookup.contribution.Override(contribution);
         }
         additionalEffects.weight = intensity;
+    }
+
+    private void handleThrobbing() {
+        var intensity = origLensDistortionIntensity + throbbingIntensity * Mathf.Sin(Time.time * 2 * Mathf.PI * throbbingFrequency);
+        lensDistortion.intensity.Override(intensity);
     }
 }

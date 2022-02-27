@@ -15,14 +15,20 @@ public class RemappableInput : MonoBehaviour
         DIR_RIGHT = new MappedDirection(Direction.RIGHT, RIGHT),
         DIR_LEFT = new MappedDirection(Direction.LEFT, LEFT);
 
-    private Dictionary<Direction, MappedDirection> originalDirections = new Dictionary<Direction, MappedDirection> {
-        { Direction.RIGHT, DIR_RIGHT },
-        { Direction.LEFT, DIR_LEFT },
-        { Direction.UP, DIR_UP },
-        { Direction.DOWN, DIR_DOWN }
+    private static InputDirection
+        INPUT_UP = new InputDirection(Direction.UP),
+        INPUT_DOWN = new InputDirection(Direction.DOWN),
+        INPUT_RIGHT = new InputDirection(Direction.RIGHT),
+        INPUT_LEFT = new InputDirection(Direction.LEFT);
+
+    private Dictionary<InputDirection, MappedDirection> originalDirections = new Dictionary<InputDirection, MappedDirection> {
+        { INPUT_RIGHT, DIR_RIGHT },
+        { INPUT_LEFT, DIR_LEFT },
+        { INPUT_UP, DIR_UP },
+        { INPUT_DOWN, DIR_DOWN }
     };
 
-    private Dictionary<Direction, MappedDirection> mappedDirections;
+    private Dictionary<InputDirection, MappedDirection> mappedDirections;
 
     void Awake() {
         Main = this;
@@ -40,56 +46,83 @@ public class RemappableInput : MonoBehaviour
     }
 
     public float GetHorizontal() {
-        var leftInput = mappedDirections[Direction.LEFT].GetAbsoluteValue();
-        var rightInput = mappedDirections[Direction.RIGHT].GetAbsoluteValue();
+        var leftInput = INPUT_LEFT.Enabled ? mappedDirections[INPUT_LEFT].GetAbsoluteValue() : 0.0f;
+        var rightInput = INPUT_RIGHT.Enabled ? mappedDirections[INPUT_RIGHT].GetAbsoluteValue() : 0.0f;
         return rightInput - leftInput;
     }
 
     public float GetVertical() {
-        var upInput = mappedDirections[Direction.UP].GetAbsoluteValue();
-        var downInput = mappedDirections[Direction.DOWN].GetAbsoluteValue();
+        var upInput = INPUT_UP.Enabled ? mappedDirections[INPUT_UP].GetAbsoluteValue() : 0.0f;
+        var downInput = INPUT_DOWN.Enabled ? mappedDirections[INPUT_DOWN].GetAbsoluteValue() : 0.0f;
         return upInput - downInput;
     }
 
     public void InvertControls() {
-        mappedDirections = new Dictionary<Direction, MappedDirection> {
-            { Direction.RIGHT, DIR_LEFT },
-            { Direction.LEFT, DIR_RIGHT },
-            { Direction.UP, DIR_DOWN },
-            { Direction.DOWN, DIR_UP }
+        mappedDirections = new Dictionary<InputDirection, MappedDirection> {
+            { INPUT_RIGHT, DIR_LEFT },
+            { INPUT_LEFT, DIR_RIGHT },
+            { INPUT_UP, DIR_DOWN },
+            { INPUT_DOWN, DIR_UP }
         };
 
         debugInputs();
     }
 
     public void InvertHorizontalControls() {
-        mappedDirections = new Dictionary<Direction, MappedDirection> {
-            { Direction.RIGHT, DIR_LEFT },
-            { Direction.LEFT, DIR_RIGHT },
-            { Direction.UP, DIR_UP },
-            { Direction.DOWN, DIR_DOWN }
+        mappedDirections = new Dictionary<InputDirection, MappedDirection> {
+            { INPUT_RIGHT, DIR_LEFT },
+            { INPUT_LEFT, DIR_RIGHT },
+            { INPUT_UP, DIR_UP },
+            { INPUT_DOWN, DIR_DOWN }
         };
+
+        debugInputs();
     }
 
     public void InvertVerticalControls() {
-        mappedDirections = new Dictionary<Direction, MappedDirection> {
-            { Direction.RIGHT, DIR_RIGHT },
-            { Direction.LEFT, DIR_LEFT },
-            { Direction.UP, DIR_DOWN },
-            { Direction.DOWN, DIR_UP }
+        mappedDirections = new Dictionary<InputDirection, MappedDirection> {
+            { INPUT_RIGHT, DIR_RIGHT },
+            { INPUT_LEFT, DIR_LEFT },
+            { INPUT_UP, DIR_DOWN },
+            { INPUT_DOWN, DIR_UP }
         };
+
+        debugInputs();
     }
 
     public void RandomizeDirections() {
         var values = originalDirections.Values.ToList().Shuffled();
-        mappedDirections = new Dictionary<Direction, MappedDirection> {
-            { Direction.RIGHT, values.Pop() },
-            { Direction.LEFT, values.Pop() },
-            { Direction.UP, values.Pop() },
-            { Direction.DOWN, values.Pop() }
+        mappedDirections = new Dictionary<InputDirection, MappedDirection> {
+            { INPUT_RIGHT, values.Pop() },
+            { INPUT_LEFT, values.Pop() },
+            { INPUT_UP, values.Pop() },
+            { INPUT_DOWN, values.Pop() }
         };
 
         debugInputs();
+    }
+
+    public void SwapHorizontalAndVerticalControls() {
+        var leftAndRight = new List<MappedDirection> { DIR_RIGHT, DIR_LEFT }.Shuffled();
+        var upAndDown = new List<MappedDirection> { DIR_DOWN, DIR_UP }.Shuffled();
+        mappedDirections = new Dictionary<InputDirection, MappedDirection> {
+            { INPUT_RIGHT, upAndDown.Pop() },
+            { INPUT_LEFT, upAndDown.Pop() },
+            { INPUT_UP, leftAndRight.Pop() },
+            { INPUT_DOWN, leftAndRight.Pop() }
+        };
+
+        debugInputs();
+    }
+
+    public void DisableHorizontalControls() {
+        INPUT_LEFT.Enabled = false;
+        INPUT_RIGHT.Enabled = false;
+    }
+
+    public void EnableHorizontalControls() {
+        INPUT_LEFT.Enabled = true;
+        INPUT_RIGHT.Enabled = true;
     }
 
     public void ResetDirections() {
@@ -100,21 +133,21 @@ public class RemappableInput : MonoBehaviour
 
     /// Returns current Input -> Movedirection mappings.
     /// The key is the input (eg. 'up' = 'W') and the value is the direction that key will move the player.
-    public Dictionary<Direction, Direction> GetInputMappings() {
+    public Dictionary<Direction, InputDirection> GetInputMappings() {
         return mappedDirections.ToDictionary(it => it.Value.Direction, it => it.Key);
     }
 
     private void debugInputs() {
         var inputs = GetInputMappings();
         Debug.Log("Inputs are now:");
-        Debug.Log("UP / W: " + inputs[Direction.UP]);
-        Debug.Log("DOWN / S: " + inputs[Direction.DOWN]);
-        Debug.Log("LEFT / A : " + inputs[Direction.LEFT]);
-        Debug.Log("RIGHT / D: " + inputs[Direction.RIGHT]);
+        Debug.Log("UP / W: " + inputs[Direction.UP].Direction);
+        Debug.Log("DOWN / S: " + inputs[Direction.DOWN].Direction);
+        Debug.Log("LEFT / A : " + inputs[Direction.LEFT].Direction);
+        Debug.Log("RIGHT / D: " + inputs[Direction.RIGHT].Direction);
     }
 }
 
-public struct MappedDirection {
+public class MappedDirection {
 
     public Direction Direction;
     string axis;
@@ -126,6 +159,17 @@ public struct MappedDirection {
 
     public float GetAbsoluteValue() {
         return Input.GetAxis(axis);
+    }
+}
+
+public class InputDirection {
+    
+    public Direction Direction;
+    public bool Enabled;
+
+    public InputDirection(Direction direction) {
+        this.Direction = direction;
+        Enabled = true;
     }
 }
 

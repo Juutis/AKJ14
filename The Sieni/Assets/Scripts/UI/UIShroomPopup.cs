@@ -171,11 +171,11 @@ public class UIShroomPopup : MonoBehaviour
     public void RemapUIButtons()
     {
 
-        Dictionary<Direction, Direction> mappings = RemappableInput.Main.GetInputMappings();
-        foreach (KeyValuePair<Direction, Direction> kvp in mappings)
+        Dictionary<Direction, InputDirection> mappings = RemappableInput.Main.GetInputMappings();
+        foreach (var kvp in mappings)
         {
             Direction key = kvp.Key;
-            Direction direction = kvp.Value;
+            Direction direction = kvp.Value.Direction;
             if (key == Direction.UP)
             {
                 UIMoveButtonInfo moveButton = moveButtons[0];

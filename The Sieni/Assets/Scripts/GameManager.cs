@@ -16,8 +16,10 @@ public class GameManager : MonoBehaviour
 
     private int moveShroomEffectCount = 0;
     private int visionShroomEffectCount = 0;
+    private int disableControlsShroomEffectCount = 0;
 
     private int moveShroomsEaten = 0;
+    private int disableControlsShroomsEaten = 0;
 
     private int scoreMultiplier = 1;
     private int totalScore = 0;
@@ -26,7 +28,7 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-            return moveShroomEffectCount + visionShroomEffectCount;
+            return moveShroomEffectCount + visionShroomEffectCount + disableControlsShroomEffectCount;
         }
     }
 
@@ -73,6 +75,14 @@ public class GameManager : MonoBehaviour
             visionShroomEffectCount++;
             Invoke("EndVisionShroomEffect", getDurationForType(objectType));
         }
+        if (objectType == MoveObjectType.DisableControlShroom)
+        {
+            ShroomEffects.Main.SetOnAcid(true);
+            disableControls();
+            disableControlsShroomEffectCount++;
+            Invoke("EndDisableControlsShroomEffect", getDurationForType(objectType));
+            UIManager.main.RemapButtons();
+        }
     }
 
     public void GainScore(int score)
@@ -98,7 +108,9 @@ public class GameManager : MonoBehaviour
         moveShroomEffectCount--;
         if (moveShroomEffectCount <= 0)
         {
-            RemappableInput.Main.ResetDirections();
+            if (disableControlsShroomEffectCount <= 0) {
+                RemappableInput.Main.ResetDirections();
+            }
             if (totalEffectCount <= 0)
             {
                 ShroomEffects.Main.SetOnAcid(false);
@@ -115,6 +127,20 @@ public class GameManager : MonoBehaviour
             ShroomEffects.Main.SetDizzyCamera(false);
             if (totalEffectCount <= 0)
             {
+                ShroomEffects.Main.SetOnAcid(false);
+            }
+        }
+    }
+
+    public void EndDisableControlsShroomEffect() {
+        disableControlsShroomEffectCount--;
+        if (disableControlsShroomEffectCount <= 0) {
+            RemappableInput.Main.EnableHorizontalControls();
+            if (moveShroomEffectCount <= 0) {
+                RemappableInput.Main.ResetDirections();
+                UIManager.main.RemapButtons();
+            }
+            if (totalEffectCount <= 0) {
                 ShroomEffects.Main.SetOnAcid(false);
             }
         }
@@ -148,7 +174,19 @@ public class GameManager : MonoBehaviour
         }
         moveShroomsEaten++;
     }
+
+    private void disableControls() {
+        if (disableControlsShroomsEaten < 5) {
+            RemappableInput.Main.DisableHorizontalControls();
+        } else {
+            RemappableInput.Main.DisableHorizontalControls();
+            RemappableInput.Main.SwapHorizontalAndVerticalControls();
+        }
+        disableControlsShroomsEaten++;
+    }
 }
+
+
 
 [Serializable]
 public class EffectDuration
