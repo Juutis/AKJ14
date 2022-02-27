@@ -49,6 +49,13 @@ MonoBehaviour:
     Duration: 8
   - Type: 3
     Duration: 6
+  multipliers:
+  - Type: 1
+    Multiplier: 0
+  - Type: 2
+    Multiplier: 1
+  - Type: 3
+    Multiplier: 2
 --- !u!1 &4198376794926535567
 GameObject:
   m_ObjectHideFlags: 0
