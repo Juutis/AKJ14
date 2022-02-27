@@ -33,9 +33,9 @@ public class UIManager : MonoBehaviour
         uiShroomPopup.InitializeButtons(uiConfig.UIMoveButtons);
     }
 
-    public void RemapButtons()
+    public void RemapButtons(MoveObjectType objectType = MoveObjectType.None, bool affectCount = true)
     {
-        uiShroomPopup.Popup();
+        uiShroomPopup.Popup(objectType, affectCount);
     }
 
     public void HighlightMoveButtons(Vector2 input)

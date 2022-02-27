@@ -22,10 +22,10 @@ public class UIMoveButtonInfo : MonoBehaviour
     private Color originalColor;
 
 
-    public void Initialize(UIMoveButtonData buttonData)
+    public void Initialize(UIMoveButtonData buttonData, string textIcon)
     {
         txtKey.text = buttonData.Key.ToString();
-        txtIcon.text = buttonData.TextIcon;
+        txtIcon.text = textIcon;
         imgIcon.sprite = buttonData.Sprite;
         buttonType = buttonData.ButtonType;
         originalColor = imgButton.color;

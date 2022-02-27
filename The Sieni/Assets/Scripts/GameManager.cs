@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
             changeControls();
             moveShroomEffectCount++;
             Invoke("EndMoveShroomEffect", getDurationForType(objectType));
-            UIManager.main.RemapButtons();
+            UIManager.main.RemapButtons(objectType);
             SoundManager.main.PlaySound(GameSoundType.PickupMovement);
             MusicPlayer.main.SwitchMusic(false);
             AddCollectedShroom(objectType);
@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour
             disableControls();
             disableControlsShroomEffectCount++;
             Invoke("EndDisableControlsShroomEffect", getDurationForType(objectType));
-            UIManager.main.RemapButtons();
+            UIManager.main.RemapButtons(objectType);
             SoundManager.main.PlaySound(GameSoundType.PickupButton);
             MusicPlayer.main.SwitchMusic(false);
             AddCollectedShroom(objectType);
@@ -158,7 +158,7 @@ public class GameManager : MonoBehaviour
                 ShroomEffects.Main.SetOnAcid(false);
                 MusicPlayer.main.SwitchMusic(true);
             }
-            UIManager.main.RemapButtons();
+            UIManager.main.RemapButtons(MoveObjectType.MoveShroom, false);
         }
     }
 
@@ -191,7 +191,7 @@ public class GameManager : MonoBehaviour
                 ShroomEffects.Main.SetOnAcid(false);
                 MusicPlayer.main.SwitchMusic(true);
             }
-            UIManager.main.RemapButtons();
+            UIManager.main.RemapButtons(MoveObjectType.DisableControlShroom, false);
         }
     }
 

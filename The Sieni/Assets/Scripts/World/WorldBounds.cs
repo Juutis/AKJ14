@@ -28,7 +28,7 @@ public class WorldBounds : MonoBehaviour
 
     public void DetermineBounds()
     {
-        Vector2 screenSize;
+        Vector2 screenSize = new Vector2(960, 600);
 #if UNITY_EDITOR
         if (!Application.isPlaying)
         {
@@ -39,10 +39,10 @@ public class WorldBounds : MonoBehaviour
             screenSize = new Vector2(Screen.width, Screen.height);
         }
 #endif
-        if (Application.isPlaying)
-        {
-            screenSize = new Vector2(Screen.width, Screen.height);
-        }
+#if !UNITY_EDITOR
+
+        screenSize = new Vector2(Screen.width, Screen.height);
+#endif
 
         float width = screenSize.x;
         float height = screenSize.y;

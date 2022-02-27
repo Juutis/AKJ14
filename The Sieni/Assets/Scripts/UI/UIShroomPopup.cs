@@ -18,19 +18,19 @@ public class UIShroomPopup : MonoBehaviour
         {
             if (buttonData.ButtonType == MoveButtonType.Top)
             {
-                moveButtons[0].Initialize(buttonData);
+                moveButtons[0].Initialize(buttonData, "q");
             }
             if (buttonData.ButtonType == MoveButtonType.Left)
             {
-                moveButtons[1].Initialize(buttonData);
+                moveButtons[1].Initialize(buttonData, "o");
             }
             if (buttonData.ButtonType == MoveButtonType.Bottom)
             {
-                moveButtons[2].Initialize(buttonData);
+                moveButtons[2].Initialize(buttonData, "m");
             }
             if (buttonData.ButtonType == MoveButtonType.Right)
             {
-                moveButtons[3].Initialize(buttonData);
+                moveButtons[3].Initialize(buttonData, "k");
             }
         }
     }
@@ -38,7 +38,15 @@ public class UIShroomPopup : MonoBehaviour
     [SerializeField]
     private Animator animator;
 
-    public void Popup()
+
+    private Dictionary<MoveObjectType, int> mapTypesToCount = new Dictionary<MoveObjectType, int> {
+        {MoveObjectType.MoveShroom, 0},
+        {MoveObjectType.DisableControlShroom, 0},
+    };
+
+    int countToShow = 1;
+
+    public void Popup(MoveObjectType objectType = MoveObjectType.None, bool affectCount = true)
     {
         popupping = true;
         foreach (UIMoveButtonInfo moveButton in moveButtons)
@@ -46,13 +54,42 @@ public class UIShroomPopup : MonoBehaviour
             moveButton.Unhighlight();
         }
         Time.timeScale = 0f;
-        animator.Play("Show");
+        bool showLong = true;
+        if (objectType != MoveObjectType.None)
+        {
+            if (affectCount)
+            {
+                mapTypesToCount[objectType] += 1;
+                showLong = mapTypesToCount[objectType] < countToShow;
+            }
+            else
+            {
+
+                showLong = mapTypesToCount[objectType] < countToShow + 1;
+            }
+        }
+        if (showLong)
+        {
+            animator.Play("Show");
+        }
+        else
+        {
+            animator.Play("ShowShort");
+        }
+
     }
 
     public void ShowFinished()
     {
         RemapUIButtons();
         animator.Play("Hide");
+    }
+
+
+    public void ShowShortFinished()
+    {
+        RemapUIButtons();
+        animator.Play("HideShort");
     }
 
     public void HideFinished()
@@ -162,10 +199,10 @@ public class UIShroomPopup : MonoBehaviour
         {Direction.DOWN, KeyCode.S}
     };
     Dictionary<Direction, string> inputsToKeyIcons = new Dictionary<Direction, string>{
-        {Direction.UP, "↑"},
-        {Direction.LEFT, "←"},
-        {Direction.RIGHT, "→"},
-        {Direction.DOWN, "↓"}
+        {Direction.UP, "q"},
+        {Direction.LEFT, "o"},
+        {Direction.RIGHT, "k"},
+        {Direction.DOWN, "m"}
     };
 
     public void RemapUIButtons()
