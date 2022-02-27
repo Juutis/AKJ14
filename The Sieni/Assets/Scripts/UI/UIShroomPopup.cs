@@ -176,27 +176,32 @@ public class UIShroomPopup : MonoBehaviour
         {
             Direction key = kvp.Key;
             Direction direction = kvp.Value.Direction;
+            bool enabled = kvp.Value.Enabled;
             if (key == Direction.UP)
             {
                 UIMoveButtonInfo moveButton = moveButtons[0];
                 moveButton.SetKey(inputsToKeys[direction], inputsToKeyIcons[direction]);
+                moveButton.SetEnabled(enabled);
             }
             if (key == Direction.LEFT)
             {
                 UIMoveButtonInfo moveButton = moveButtons[1];
                 moveButton.SetKey(inputsToKeys[direction], inputsToKeyIcons[direction]);
+                moveButton.SetEnabled(enabled);
 
             }
             if (key == Direction.RIGHT)
             {
                 UIMoveButtonInfo moveButton = moveButtons[3];
                 moveButton.SetKey(inputsToKeys[direction], inputsToKeyIcons[direction]);
+                moveButton.SetEnabled(enabled);
 
             }
             if (key == Direction.DOWN)
             {
                 UIMoveButtonInfo moveButton = moveButtons[2];
                 moveButton.SetKey(inputsToKeys[direction], inputsToKeyIcons[direction]);
+                moveButton.SetEnabled(enabled);
 
             }
             //Debug.Log($"Set physical {key} to {inputsToKeyIcons[direction]}");
