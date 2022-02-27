@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playtestStepOffset: 0
   speed: 2
-  speedIncrease: 0.25
-  speedIncreaseStepInterval: 5
+  speedIncrease: 0.03
+  speedIncreaseStepInterval: 10
   speedMax: 5
   worldHeight: 10
   bufferZoneSize: 1
@@ -58,17 +58,24 @@ MonoBehaviour:
   - isEnabled: 1
     moveObjectType: 4
     spawnInterval: 6
-    spawnOffset: 15
-    spawnAmount: 1
-    maxSpawns: 3
-    increaseStepInterval: 150
-  - isEnabled: 1
-    moveObjectType: 4
-    spawnInterval: 11
-    spawnOffset: 200
+    spawnOffset: 20
     spawnAmount: 1
     maxSpawns: 2
     increaseStepInterval: 300
+  - isEnabled: 1
+    moveObjectType: 4
+    spawnInterval: 9
+    spawnOffset: 600
+    spawnAmount: 1
+    maxSpawns: 2
+    increaseStepInterval: 750
+  - isEnabled: 1
+    moveObjectType: 4
+    spawnInterval: 5
+    spawnOffset: 2500
+    spawnAmount: 1
+    maxSpawns: 1
+    increaseStepInterval: 0
   - isEnabled: 0
     moveObjectType: 5
     spawnInterval: 1
