@@ -67,10 +67,10 @@ public class GameManager : MonoBehaviour
         }
         if (objectType == MoveObjectType.RegularShroom)
         {
-            int score = 1;
-            GainScore(score);
+            //int score = 1;
+            int scoreGained = GainScore(1);
             Vector3 offset = new Vector3(0, 1f, 0f);
-            UIManager.main.ShowPoppingMessage(PlayerInput.main.transform.position + offset, $"+{score}");
+            UIManager.main.ShowPoppingMessage(PlayerInput.main.transform.position + offset, $"+{scoreGained}");
             SoundManager.main.PlaySound(GameSoundType.PickupRegular);
             AddCollectedShroom(objectType);
         }
@@ -108,17 +108,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void GainScore(int score)
+    public int GainScore(int score)
     {
         Debug.Log($"Gained {score * scoreMultiplier} score! Now you have {totalScore}!");
         totalScore += score * scoreMultiplier;
         UIManager.main.UpdateScore(scoreMultiplier, totalScore, collectedShrooms);
+        return totalScore;
     }
 
     public void GainMultiplier(MoveObjectType objectType)
     {
-        scoreMultiplier += multipliers.FirstOrDefault(x => x.Type == objectType)?.Multiplier ?? 0;
+        int multiplierAddition = multipliers.FirstOrDefault(x => x.Type == objectType)?.Multiplier ?? 0;
+        scoreMultiplier += multiplierAddition;
         UIManager.main.UpdateScore(scoreMultiplier, totalScore, collectedShrooms);
+        if (multiplierAddition != 0)
+        {
+            Vector3 offset = new Vector3(0, 0.5f, 0f);
+            UIManager.main.ShowPoppingMessage(PlayerInput.main.transform.position + offset, $"X{multiplierAddition} multiplier!");
+        }
     }
 
     public void GameOver()
