@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
             PlayerInput playerInput = PlayerInput.main;
             playerInput.IsEnabled = false;
             playerInput.Stop();
-            Debug.Log("You hit a tree!");
+            // Debug.Log("You hit a tree!");
             WorldMover.main.IsMoving = false;
             GameOver();
         }
@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
         {
             moveObject.Kill();
         }
-        if (objectType == MoveObjectType.RegularShroom)
+        if (objectType == MoveObjectType.RegularShroom || objectType == MoveObjectType.Bird)
         {
             int score = 1;
             GainScore(score);
@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
 
     public void GainScore(int score)
     {
-        Debug.Log($"Gained {score * scoreMultiplier} score! Now you have {totalScore}!");
+        // Debug.Log($"Gained {score * scoreMultiplier} score! Now you have {totalScore}!");
         totalScore += score * scoreMultiplier;
         UIManager.main.UpdateScore(scoreMultiplier, totalScore, collectedShrooms);
     }
@@ -115,7 +115,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        Debug.Log("Game over!");
+        // Debug.Log("Game over!");
         UIManager.main.ShowGameOver();
     }
 
@@ -225,7 +225,7 @@ public class GameManager : MonoBehaviour
             if (GetCollectedCount(winRequirement.Type) < winRequirement.Count) return;
         }
 
-        Debug.Log("WIN!");
+        // Debug.Log("WIN!");
     }
 }
 

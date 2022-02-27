@@ -24,7 +24,7 @@ public class Bird : MonoBehaviour
         if (fly)
         {
             float dirX = spriteRenderer.flipX ? -1 : 1;
-            transform.position = new Vector3(transform.position.x - Time.deltaTime * dirX * flySpeed, transform.position.y + Time.deltaTime * flySpeed, transform.position.z);
+            transform.localPosition = new Vector3(transform.localPosition.x - Time.deltaTime * dirX * flySpeed, transform.localPosition.y + Time.deltaTime * flySpeed, transform.position.z);
         }
     }
 
@@ -40,8 +40,15 @@ public class Bird : MonoBehaviour
 
     public void Die()
     {
-        fly = false;
-        transform.localPosition = Vector3.zero;
-        animator.Play("BirdIdle");
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        if (!animator.enabled)
+        {
+            fly = false;
+            transform.localPosition = Vector3.zero;
+            // animator.Play("BirdIdle");
+            animator.Rebind();
+            animator.Update(0f);
+        }
     }
 }

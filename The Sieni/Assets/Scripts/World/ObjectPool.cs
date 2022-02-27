@@ -89,6 +89,7 @@ public class ObjectPool : MonoBehaviour
 
     public void Sleep(WorldMoveObject sleepObject)
     {
+        if (sleepObject.ObjectType == MoveObjectType.Bird) Debug.Log("BIRD!!!!!!!!");
         sleepObject.Sleep();
         activeObjects[sleepObject.ObjectType].Remove(sleepObject);
         sleepingObjects[sleepObject.ObjectType].Add(sleepObject);

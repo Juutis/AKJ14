@@ -95,7 +95,7 @@ public class WorldMover : MonoBehaviour
 
     public void Sleep(WorldMoveObject moveObject)
     {
-        objectPool.Sleep(moveObject);
+        moveObject.Sleep(objectPool);
         moveObjects.Remove(moveObject);
     }
 

@@ -44,7 +44,7 @@ public class WorldDecorationSpawner : MonoBehaviour
         screenArea = area;
         offset = new Vector2(-screenArea.x / 2, -screenArea.y / 2);
         Vector2 areaToFill = new Vector2(area.x * 2, area.y);
-        Debug.Log($"Area to fill: {areaToFill.x}");
+        // Debug.Log($"Area to fill: {areaToFill.x}");
         Fill(area);
         Fill(area, area.x);
     }
@@ -66,7 +66,7 @@ public class WorldDecorationSpawner : MonoBehaviour
                 if (worldMover.CheckObject(moveObject))
                 {
                     moveObjects.Remove(moveObject);
-                    objectPool.Sleep(moveObject);
+                    moveObject.Sleep(objectPool);
                 }
             }
         }
@@ -75,7 +75,7 @@ public class WorldDecorationSpawner : MonoBehaviour
     private void Fill(Vector2 area, float xOffset = 0)
     {
         lastFillAt = distanceMoved;
-        Debug.Log($"Filling at {lastFillAt} {xOffset} {offset}");
+        // Debug.Log($"Filling at {lastFillAt} {xOffset} {offset}");
         sampler = new PoissonDiscSampler(area.x, area.y, DecorationConfig.Radius);
         birdSampler = new PoissonDiscSampler(area.x, area.y, DecorationConfig.Radius * 6);
         cloudSampler = new PoissonDiscSampler(area.x, area.y, DecorationConfig.Radius * 2);

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6951258925811223373}
   - component: {fileID: 4935201740302895066}
   - component: {fileID: 857121170524826582}
+  - component: {fileID: 6050357861255806195}
   m_Layer: 0
   m_Name: Decoration
   m_TagString: Untagged
@@ -136,6 +137,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
+--- !u!114 &6050357861255806195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 894501350619664517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 423da96b5f0ec5c4bb1dbc8c3ccc6e1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5288367427499523293
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,6 +226,7 @@ GameObject:
   - component: {fileID: 5256344550323262912}
   - component: {fileID: 8833250404791665440}
   - component: {fileID: 7254853021162256182}
+  - component: {fileID: 5081446204177487323}
   m_Layer: 0
   m_Name: Decoration
   m_TagString: Untagged
@@ -336,6 +350,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
+--- !u!114 &5081446204177487323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8415211744871301088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 423da96b5f0ec5c4bb1dbc8c3ccc6e1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &50293958726857297
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -474,6 +500,10 @@ PrefabInstance:
     - target: {fileID: 4179038169774551484, guid: e04e9745115355e4b96e57af6e628995, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8281636913551420696, guid: e04e9745115355e4b96e57af6e628995, type: 3}
+      propertyPath: m_Radius
+      value: 1.05
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e04e9745115355e4b96e57af6e628995, type: 3}

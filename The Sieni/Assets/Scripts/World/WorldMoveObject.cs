@@ -50,22 +50,54 @@ public class WorldMoveObject : MonoBehaviour
         name = $"{originalName} [active]";
     }
 
+    public void Sleep(ObjectPool objectPool)
+    {
+        if (moveConfig.ObjectType == MoveObjectType.Bird)
+        {
+            HandleBird();
+        }
+        else
+        {
+            objectPool.Sleep(this);
+        }
+    }
+
     public void Kill()
     {
         if (moveConfig.ObjectType == MoveObjectType.Bird)
         {
-            foreach (GameObject style in possibleStyles)
+            HandleBird();
+        }
+        else
+        {
+            WorldMover.main.Sleep(this);
+        }
+    }
+
+    void HandleBird(ObjectPool pool = null)
+    {
+        foreach (GameObject style in possibleStyles)
+        {
+            foreach (Transform child in style.transform)
             {
-                foreach (Transform child in style.transform)
+                if (child.TryGetComponent<Bird>(out Bird bird))
                 {
-                    if (child.TryGetComponent<Bird>(out Bird bird))
-                    {
-                        bird.Die();
-                    }
+                    StartCoroutine(BirdSleep(bird, pool));
                 }
             }
         }
+    }
+    IEnumerator BirdSleep(Bird bird, ObjectPool pool)
+    {
+        yield return new WaitForSeconds(3f);
+        bird.Die();
+        yield return new WaitForSeconds(1f);
         WorldMover.main.Sleep(this);
+        if (pool != null)
+        {
+            pool.Sleep(this);
+        }
+        yield return null;
     }
 
     public void OnTriggerEnter2DFromChild(Collider2D other)
