@@ -44,7 +44,7 @@ public class UIShroomPopup : MonoBehaviour
         {MoveObjectType.DisableControlShroom, 0},
     };
 
-    int countToShow = 1;
+    int countToShow = 5;
 
     public void Popup(MoveObjectType objectType = MoveObjectType.None, bool affectCount = true)
     {
