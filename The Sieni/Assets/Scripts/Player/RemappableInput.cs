@@ -9,29 +9,31 @@ public class RemappableInput : MonoBehaviour
 
     private static string UP = "Up", DOWN = "Down", RIGHT = "Right", LEFT = "Left";
 
-    private static MappedDirection
+    private MappedDirection
         DIR_UP = new MappedDirection(Direction.UP, UP),
         DIR_DOWN = new MappedDirection(Direction.DOWN, DOWN),
         DIR_RIGHT = new MappedDirection(Direction.RIGHT, RIGHT),
         DIR_LEFT = new MappedDirection(Direction.LEFT, LEFT);
 
-    private static InputDirection
+    private InputDirection
         INPUT_UP = new InputDirection(Direction.UP),
         INPUT_DOWN = new InputDirection(Direction.DOWN),
         INPUT_RIGHT = new InputDirection(Direction.RIGHT),
         INPUT_LEFT = new InputDirection(Direction.LEFT);
 
-    private Dictionary<InputDirection, MappedDirection> originalDirections = new Dictionary<InputDirection, MappedDirection> {
-        { INPUT_RIGHT, DIR_RIGHT },
-        { INPUT_LEFT, DIR_LEFT },
-        { INPUT_UP, DIR_UP },
-        { INPUT_DOWN, DIR_DOWN }
-    };
+    private Dictionary<InputDirection, MappedDirection> originalDirections;
 
     private Dictionary<InputDirection, MappedDirection> mappedDirections;
 
     void Awake() {
         Main = this;
+        
+        originalDirections = new Dictionary<InputDirection, MappedDirection> {
+            { INPUT_RIGHT, DIR_RIGHT },
+            { INPUT_LEFT, DIR_LEFT },
+            { INPUT_UP, DIR_UP },
+            { INPUT_DOWN, DIR_DOWN }
+        };
         mappedDirections = originalDirections;
     }
 
@@ -82,7 +84,7 @@ public class RemappableInput : MonoBehaviour
             RemappableInput.Main.InvertVerticalControls();
         }
     }
-    
+
     public void InvertHorizontalControls() {
         var left = mappedDirections[INPUT_LEFT];
         var right = mappedDirections[INPUT_RIGHT];
