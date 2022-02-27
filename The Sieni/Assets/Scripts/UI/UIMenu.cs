@@ -57,6 +57,7 @@ public class UIMenu : MonoBehaviour
             selection.SetSelected(selectorIndex == index);
             index += 1;
         }
+        CurrentSelection = selections[selectorIndex];
     }
 
     public void MoveSelector(bool directionDown)
