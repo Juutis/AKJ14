@@ -56,9 +56,9 @@ public class WorldMover : MonoBehaviour
             spawn.PreviousSpawnStep = 0;
         }
         worldBounds.DetermineBounds();
-        spawnPositions = InitializeSpawnPositions();
         objectPool.Initialize();
-        decorationSpawner.SetArea(worldBounds.GetSize());
+        RefreshSpawns();
+
 
 #if UNITY_EDITOR
         distanceMoved += moveConfig.PlaytestStepOffset;
@@ -97,6 +97,12 @@ public class WorldMover : MonoBehaviour
     {
         moveObject.Sleep(objectPool);
         moveObjects.Remove(moveObject);
+    }
+
+    public void RefreshSpawns()
+    {
+        spawnPositions = InitializeSpawnPositions();
+        decorationSpawner.SetArea(worldBounds.GetSize());
     }
 
     public List<Vector2> InitializeSpawnPositions()

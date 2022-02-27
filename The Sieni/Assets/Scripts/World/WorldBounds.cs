@@ -8,6 +8,15 @@ public class WorldBounds : MonoBehaviour
     private Vector2 maxUnitySize;
     private Vector2 minUnitySize;
 
+    [SerializeField]
+    private WorldMover worldMover;
+
+    public static WorldBounds main;
+    private void Awake()
+    {
+        main = this;
+    }
+
     private void OnDrawGizmos()
     {
 #if UNITY_EDITOR
@@ -19,7 +28,22 @@ public class WorldBounds : MonoBehaviour
 
     public void DetermineBounds()
     {
-        Vector2 screenSize = GameViewHelper.GetSize();
+        Vector2 screenSize;
+#if UNITY_EDITOR
+        if (!Application.isPlaying)
+        {
+            screenSize = GameViewHelper.GetSize();
+        }
+        else
+        {
+            screenSize = new Vector2(Screen.width, Screen.height);
+        }
+#endif
+        if (Application.isPlaying)
+        {
+            screenSize = new Vector2(Screen.width, Screen.height);
+        }
+
         float width = screenSize.x;
         float height = screenSize.y;
 
@@ -35,8 +59,6 @@ public class WorldBounds : MonoBehaviour
         minUnitySize = Camera.main.ScreenToWorldPoint(bounds.min);
         maxUnitySize.y -= 2f;
         minUnitySize.y += 1f;
-
-
     }
 
     public float WorldBoundsMinY()
@@ -65,6 +87,21 @@ public class WorldBounds : MonoBehaviour
                 Mathf.Abs(minUnitySize.x - maxUnitySize.x),
                 Mathf.Abs(minUnitySize.y - maxUnitySize.y)
             );
+    }
+
+    private float width = Screen.width;
+    private float height = Screen.height;
+
+    void Update()
+    {
+        if (Screen.width != width || Screen.height != height)
+        {
+            width = Screen.width;
+            height = Screen.height;
+            Debug.Log("Bounds changed, determining...");
+            DetermineBounds();
+            worldMover.RefreshSpawns();
+        }
     }
 
 }
