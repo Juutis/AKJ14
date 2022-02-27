@@ -58,7 +58,10 @@ public class GameManager : MonoBehaviour
         }
         if (objectType == MoveObjectType.RegularShroom)
         {
-            GainScore(1);
+            int score = 1;
+            GainScore(score);
+            Vector3 offset = new Vector3(0, 1f, 0f);
+            UIManager.main.ShowPoppingMessage(PlayerInput.main.transform.position + offset, $"+{score}");
         }
         if (objectType == MoveObjectType.MoveShroom)
         {

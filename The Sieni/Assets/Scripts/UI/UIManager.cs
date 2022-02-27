@@ -17,6 +17,10 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private UIScore uiScore;
 
+    [SerializeField]
+    private UIPoppingText popPrefab;
+    [SerializeField]
+    private Transform popContainer;
 
     void Start()
     {
@@ -37,6 +41,19 @@ public class UIManager : MonoBehaviour
     public void UpdateScore(int multiplier, int totalScore)
     {
         uiScore.UpdateScore(multiplier, totalScore);
+    }
+
+
+    public void ShowPoppingMessage(Vector2 pos, int message)
+    {
+        ShowPoppingMessage(pos, message.ToString());
+    }
+
+    public void ShowPoppingMessage(Vector2 pos, string message)
+    {
+        UIPoppingText popText = Instantiate(popPrefab);
+        popText.transform.SetParent(popContainer);
+        popText.Show(pos, message);
     }
 }
 
