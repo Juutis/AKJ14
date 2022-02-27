@@ -33,7 +33,7 @@ public class WorldBounds : MonoBehaviour
 
         maxUnitySize = Camera.main.ScreenToWorldPoint(bounds.max);
         minUnitySize = Camera.main.ScreenToWorldPoint(bounds.min);
-        maxUnitySize.y -= 1f;
+        maxUnitySize.y -= 2f;
         minUnitySize.y += 1f;
 
 

@@ -154,11 +154,11 @@ public class GameManager : MonoBehaviour
             RemappableInput.Main.EnableHorizontalControls();
             if (moveShroomEffectCount <= 0) {
                 RemappableInput.Main.ResetDirections();
-                UIManager.main.RemapButtons();
             }
             if (totalEffectCount <= 0) {
                 ShroomEffects.Main.SetOnAcid(false);
             }
+            UIManager.main.RemapButtons();
         }
     }
 
