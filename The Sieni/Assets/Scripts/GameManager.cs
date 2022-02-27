@@ -46,8 +46,10 @@ public class GameManager : MonoBehaviour
         collectedShrooms = new Dictionary<MoveObjectType, int>();
     }
 
-    public void Update() {
-        if (Input.GetKeyDown(KeyCode.R)) {
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
             Restart();
         }
     }
@@ -118,9 +120,10 @@ public class GameManager : MonoBehaviour
     public int GainScore(int score)
     {
         Debug.Log($"Gained {score * scoreMultiplier} score! Now you have {totalScore}!");
-        totalScore += score * scoreMultiplier;
+        int scoreGained = score * scoreMultiplier;
+        totalScore += scoreGained;
         UIManager.main.UpdateScore(scoreMultiplier, totalScore, collectedShrooms);
-        return totalScore;
+        return scoreGained;
     }
 
     public void GainMultiplier(MoveObjectType objectType)
@@ -258,7 +261,8 @@ public class GameManager : MonoBehaviour
         Debug.Log("WIN!");
     }
 
-    public void Restart() {
+    public void Restart()
+    {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
