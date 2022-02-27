@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     private List<ShroomMultiplierIncrement> multipliers;
 
     [SerializeField]
-    private List<ShroomCount> shroomsRequiredForWin;
+    public List<ShroomCount> shroomsRequiredForWin;
 
     public bool StoryMode = true;
 
@@ -210,14 +210,14 @@ public class GameManager : MonoBehaviour
         {
             collectedShrooms[type] += 1;
         }
-        checkStoryWinCondition();
+        updateStoryMode();
     }
 
-    private int GetCollectedCount(MoveObjectType type) {
+    public int GetCollectedCount(MoveObjectType type) {
         return collectedShrooms.GetValueOrDefault(type, 0);
     }
 
-    private void checkStoryWinCondition() {
+    private void updateStoryMode() {
         if (!StoryMode) return;
 
         foreach(var winRequirement in shroomsRequiredForWin) {
