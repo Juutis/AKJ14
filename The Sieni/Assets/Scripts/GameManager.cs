@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
     private int scoreMultiplier = 1;
     private int totalScore = 0;
 
+    private Dictionary<MoveObjectType, int> collectedShrooms;
+
     private int totalEffectCount
     {
         get
@@ -35,6 +37,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         main = this;
+        collectedShrooms = new Dictionary<MoveObjectType, int>();
     }
 
     public void CollectWorldObject(WorldMoveObject moveObject)
@@ -62,6 +65,7 @@ public class GameManager : MonoBehaviour
             GainScore(score);
             Vector3 offset = new Vector3(0, 1f, 0f);
             UIManager.main.ShowPoppingMessage(PlayerInput.main.transform.position + offset, $"+{score}");
+            AddCollectedShroom(objectType);
         }
         if (objectType == MoveObjectType.MoveShroom)
         {
@@ -70,6 +74,7 @@ public class GameManager : MonoBehaviour
             moveShroomEffectCount++;
             Invoke("EndMoveShroomEffect", getDurationForType(objectType));
             UIManager.main.RemapButtons();
+            AddCollectedShroom(objectType);
         }
         if (objectType == MoveObjectType.VisionShroom)
         {
@@ -77,6 +82,7 @@ public class GameManager : MonoBehaviour
             ShroomEffects.Main.SetDizzyCamera(true);
             visionShroomEffectCount++;
             Invoke("EndVisionShroomEffect", getDurationForType(objectType));
+            AddCollectedShroom(objectType);
         }
         if (objectType == MoveObjectType.DisableControlShroom)
         {
@@ -85,6 +91,7 @@ public class GameManager : MonoBehaviour
             disableControlsShroomEffectCount++;
             Invoke("EndDisableControlsShroomEffect", getDurationForType(objectType));
             UIManager.main.RemapButtons();
+            AddCollectedShroom(objectType);
         }
     }
 
@@ -186,6 +193,18 @@ public class GameManager : MonoBehaviour
             RemappableInput.Main.SwapHorizontalAndVerticalControls();
         }
         disableControlsShroomsEaten++;
+    }
+    
+    private void AddCollectedShroom(MoveObjectType type)
+    {
+        if (!collectedShrooms.ContainsKey(type))
+        {
+            collectedShrooms[type] = 1;
+        }
+        else
+        {
+            collectedShrooms[type] += 1;
+        }
     }
 }
 
