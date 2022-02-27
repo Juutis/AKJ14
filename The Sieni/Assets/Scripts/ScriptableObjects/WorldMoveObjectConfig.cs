@@ -25,4 +25,6 @@ public enum MoveObjectType
     Tree,
     Decoration,
     DisableControlShroom,
+    Cloud,
+    Bird
 }

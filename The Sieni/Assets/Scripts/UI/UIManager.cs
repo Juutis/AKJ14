@@ -16,9 +16,15 @@ public class UIManager : MonoBehaviour
     private UIShroomPopup uiShroomPopup;
     [SerializeField]
     private UIScore uiScore;
+    [SerializeField]
+    private UIGameOver uiGameOver;
 
     [SerializeField]
     private UIPoppingText popPrefab;
+
+    [SerializeField]
+    private StoryUI storyUI;
+
     [SerializeField]
     private Transform popContainer;
 
@@ -38,9 +44,10 @@ public class UIManager : MonoBehaviour
         uiShroomPopup.HighlightTraditional();
     }
 
-    public void UpdateScore(int multiplier, int totalScore)
+    public void UpdateScore(int multiplier, int totalScore, Dictionary<MoveObjectType, int> collectedShrooms)
     {
         uiScore.UpdateScore(multiplier, totalScore);
+        uiGameOver.UpdateScore(multiplier, totalScore, collectedShrooms);
     }
 
 
@@ -54,6 +61,12 @@ public class UIManager : MonoBehaviour
         UIPoppingText popText = Instantiate(popPrefab);
         popText.transform.SetParent(popContainer);
         popText.Show(pos, message);
+    }
+
+    public void ShowGameOver()
+    {
+        uiGameOver.gameObject.SetActive(true);
+        storyUI.gameObject.SetActive(false);
     }
 }
 

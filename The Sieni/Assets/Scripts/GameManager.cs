@@ -14,6 +14,11 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private List<ShroomMultiplierIncrement> multipliers;
 
+    [SerializeField]
+    public List<ShroomCount> shroomsRequiredForWin;
+
+    public bool StoryMode = true;
+
     private int moveShroomEffectCount = 0;
     private int visionShroomEffectCount = 0;
     private int disableControlsShroomEffectCount = 0;
@@ -23,6 +28,8 @@ public class GameManager : MonoBehaviour
 
     private int scoreMultiplier = 1;
     private int totalScore = 0;
+
+    private Dictionary<MoveObjectType, int> collectedShrooms;
 
     private int totalEffectCount
     {
@@ -35,6 +42,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         main = this;
+        collectedShrooms = new Dictionary<MoveObjectType, int>();
     }
 
     public void CollectWorldObject(WorldMoveObject moveObject)
@@ -64,6 +72,7 @@ public class GameManager : MonoBehaviour
             Vector3 offset = new Vector3(0, 1f, 0f);
             UIManager.main.ShowPoppingMessage(PlayerInput.main.transform.position + offset, $"+{score}");
             SoundManager.main.PlaySound(GameSoundType.PickupRegular);
+            AddCollectedShroom(objectType);
         }
         if (objectType == MoveObjectType.MoveShroom)
         {
@@ -74,6 +83,7 @@ public class GameManager : MonoBehaviour
             UIManager.main.RemapButtons();
             SoundManager.main.PlaySound(GameSoundType.PickupMovement);
             MusicPlayer.main.SwitchMusic(false);
+            AddCollectedShroom(objectType);
         }
         if (objectType == MoveObjectType.VisionShroom)
         {
@@ -83,6 +93,7 @@ public class GameManager : MonoBehaviour
             Invoke("EndVisionShroomEffect", getDurationForType(objectType));
             SoundManager.main.PlaySound(GameSoundType.PickupVision);
             MusicPlayer.main.SwitchMusic(false);
+            AddCollectedShroom(objectType);
         }
         if (objectType == MoveObjectType.DisableControlShroom)
         {
@@ -93,6 +104,7 @@ public class GameManager : MonoBehaviour
             UIManager.main.RemapButtons();
             SoundManager.main.PlaySound(GameSoundType.PickupButton);
             MusicPlayer.main.SwitchMusic(false);
+            AddCollectedShroom(objectType);
         }
     }
 
@@ -100,18 +112,19 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log($"Gained {score * scoreMultiplier} score! Now you have {totalScore}!");
         totalScore += score * scoreMultiplier;
-        UIManager.main.UpdateScore(scoreMultiplier, totalScore);
+        UIManager.main.UpdateScore(scoreMultiplier, totalScore, collectedShrooms);
     }
 
     public void GainMultiplier(MoveObjectType objectType)
     {
         scoreMultiplier += multipliers.FirstOrDefault(x => x.Type == objectType)?.Multiplier ?? 0;
-        UIManager.main.UpdateScore(scoreMultiplier, totalScore);
+        UIManager.main.UpdateScore(scoreMultiplier, totalScore, collectedShrooms);
     }
 
     public void GameOver()
     {
         Debug.Log("Game over!");
+        UIManager.main.ShowGameOver();
     }
 
     public void EndMoveShroomEffect()
@@ -155,13 +168,13 @@ public class GameManager : MonoBehaviour
             if (moveShroomEffectCount <= 0)
             {
                 RemappableInput.Main.ResetDirections();
-                UIManager.main.RemapButtons();
             }
             if (totalEffectCount <= 0)
             {
                 ShroomEffects.Main.SetOnAcid(false);
                 MusicPlayer.main.SwitchMusic(true);
             }
+            UIManager.main.RemapButtons();
         }
     }
 
@@ -174,14 +187,7 @@ public class GameManager : MonoBehaviour
     {
         if (moveShroomsEaten < 5)
         {
-            if (UnityEngine.Random.Range(0.0f, 1.0f) < 0.50f)
-            {
-                RemappableInput.Main.InvertHorizontalControls();
-            }
-            else
-            {
-                RemappableInput.Main.InvertVerticalControls();
-            }
+            RemappableInput.Main.InvertRandomAxis();
         }
         else if (moveShroomsEaten < 10)
         {
@@ -207,6 +213,36 @@ public class GameManager : MonoBehaviour
         }
         disableControlsShroomsEaten++;
     }
+
+    private void AddCollectedShroom(MoveObjectType type)
+    {
+        if (!collectedShrooms.ContainsKey(type))
+        {
+            collectedShrooms[type] = 1;
+        }
+        else
+        {
+            collectedShrooms[type] += 1;
+        }
+        updateStoryMode();
+    }
+
+    public int GetCollectedCount(MoveObjectType type)
+    {
+        return collectedShrooms.GetValueOrDefault(type, 0);
+    }
+
+    private void updateStoryMode()
+    {
+        if (!StoryMode) return;
+
+        foreach (var winRequirement in shroomsRequiredForWin)
+        {
+            if (GetCollectedCount(winRequirement.Type) < winRequirement.Count) return;
+        }
+
+        Debug.Log("WIN!");
+    }
 }
 
 
@@ -223,4 +259,11 @@ public class ShroomMultiplierIncrement
 {
     public MoveObjectType Type;
     public int Multiplier;
+}
+
+[Serializable]
+public class ShroomCount
+{
+    public MoveObjectType Type;
+    public int Count;
 }

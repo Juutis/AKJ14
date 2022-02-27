@@ -17,8 +17,18 @@ public class WorldDecorationSpawner : MonoBehaviour
 
     private PoissonDiscSampler sampler;
 
+    private PoissonDiscSampler cloudSampler;
+
+    private PoissonDiscSampler birdSampler;
+
     [SerializeField]
     private Transform container;
+
+    [SerializeField]
+    private Transform cloudContainer;
+
+    [SerializeField]
+    private Transform birdContainer;
 
     private List<WorldMoveObject> moveObjects = new List<WorldMoveObject>();
 
@@ -43,6 +53,8 @@ public class WorldDecorationSpawner : MonoBehaviour
     {
         distanceMoved += distance;
         container.position = new Vector2(container.position.x - distance, container.position.y);
+        birdContainer.position = new Vector2(birdContainer.position.x - distance, birdContainer.position.y);
+        cloudContainer.position = new Vector2(cloudContainer.position.x - distance * 2, cloudContainer.position.y);
         if (distanceMoved > (lastFillAt + screenArea.x))
         {
             Fill(screenArea, screenArea.x);
@@ -65,6 +77,8 @@ public class WorldDecorationSpawner : MonoBehaviour
         lastFillAt = distanceMoved;
         Debug.Log($"Filling at {lastFillAt} {xOffset} {offset}");
         sampler = new PoissonDiscSampler(area.x, area.y, DecorationConfig.Radius);
+        birdSampler = new PoissonDiscSampler(area.x, area.y, DecorationConfig.Radius * 6);
+        cloudSampler = new PoissonDiscSampler(area.x, area.y, DecorationConfig.Radius * 2);
 
         foreach (Vector2 sampledPos in sampler.Samples())
         {
@@ -73,6 +87,26 @@ public class WorldDecorationSpawner : MonoBehaviour
             decorationObject.transform.position = new Vector2(xOffset + sampledPos.x + offset.x, sampledPos.y + offset.y);
             decorationObject.Wakeup();
             moveObjects.Add(decorationObject);
+
+        }
+        
+        foreach (Vector2 sampledPos in cloudSampler.Samples())
+        {
+            WorldMoveObject cloudObject = objectPool.Get(MoveObjectType.Cloud);
+            cloudObject.transform.SetParent(cloudContainer);
+            cloudObject.transform.position = new Vector2(xOffset + sampledPos.x + offset.x, sampledPos.y + offset.y);
+            cloudObject.Wakeup();
+            moveObjects.Add(cloudObject);
+
+        }
+        
+        foreach (Vector2 sampledPos in birdSampler.Samples())
+        {
+            WorldMoveObject birdObject = objectPool.Get(MoveObjectType.Bird);
+            birdObject.transform.SetParent(birdContainer);
+            birdObject.transform.position = new Vector2(xOffset + sampledPos.x + offset.x, sampledPos.y + offset.y);
+            birdObject.Wakeup();
+            moveObjects.Add(birdObject);
 
         }
     }
