@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c02e05f652211ad42a661a9053afa5b5, type: 3}
   m_Name: Cloud
   m_EditorClassIdentifier: 
-  objectType: 5
+  objectType: 7

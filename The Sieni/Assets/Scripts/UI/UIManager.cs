@@ -21,6 +21,10 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private UIPoppingText popPrefab;
+
+    [SerializeField]
+    private StoryUI storyUI;
+
     [SerializeField]
     private Transform popContainer;
 
@@ -57,6 +61,12 @@ public class UIManager : MonoBehaviour
         UIPoppingText popText = Instantiate(popPrefab);
         popText.transform.SetParent(popContainer);
         popText.Show(pos, message);
+    }
+
+    public void ShowGameOver()
+    {
+        uiGameOver.gameObject.SetActive(true);
+        storyUI.gameObject.SetActive(false);
     }
 }
 

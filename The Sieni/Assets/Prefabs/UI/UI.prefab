@@ -52,6 +52,7 @@ MonoBehaviour:
   uiScore: {fileID: 2455386793801152478}
   uiGameOver: {fileID: 453737336}
   popPrefab: {fileID: 1988967800590943542, guid: b80c70894c53dc941a9e141ec584e664, type: 3}
+  storyUI: {fileID: 2838739861526500106}
   popContainer: {fileID: 8756027463727028150}
 --- !u!1 &2815230285493902758
 GameObject:
@@ -1081,3 +1082,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7466986537631672642, guid: 18f0e936c1ed5e647b1bb3b71a8e4c3d, type: 3}
   m_PrefabInstance: {fileID: 8872227743815881613}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2838739861526500106 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6648798477801586823, guid: 18f0e936c1ed5e647b1bb3b71a8e4c3d, type: 3}
+  m_PrefabInstance: {fileID: 8872227743815881613}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3deb2f36ea6788f4885476457c6e4bb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -116,6 +116,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         Debug.Log("Game over!");
+        UIManager.main.ShowGameOver();
     }
 
     public void EndMoveShroomEffect()
