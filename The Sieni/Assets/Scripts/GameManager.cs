@@ -79,11 +79,13 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log($"Gained {score * scoreMultiplier} score! Now you have {totalScore}!");
         totalScore += score * scoreMultiplier;
+        UIManager.main.UpdateScore(scoreMultiplier, totalScore);
     }
 
     public void GainMultiplier(MoveObjectType objectType)
     {
         scoreMultiplier += multipliers.FirstOrDefault(x => x.Type == objectType)?.Multiplier ?? 0;
+        UIManager.main.UpdateScore(scoreMultiplier, totalScore);
     }
 
     public void GameOver()
