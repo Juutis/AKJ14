@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playtestStepOffset: 0
   speed: 2
-  speedIncrease: 0.25
-  speedIncreaseStepInterval: 5
+  speedIncrease: 0.1
+  speedIncreaseStepInterval: 10
   speedMax: 5
   worldHeight: 10
   bufferZoneSize: 1
