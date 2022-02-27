@@ -17,6 +17,9 @@ public class MusicPlayer : MonoBehaviour
     [SerializeField]
     private AudioClip acidMusicClip;
 
+    [SerializeField]
+    private float acidPitch = 0.8f;
+
     private List<AudioFade> fades = new List<AudioFade>();
 
     [SerializeField]
@@ -81,11 +84,11 @@ public class MusicPlayer : MonoBehaviour
         Debug.Log($"Switching to {normalOrAcid}");
         if (isNormal)
         {
-            CrossFade(acidMusic, normalMusic, crossfadeDurationOut, crossfadeDurationIn, musicVolumeNormal);
+            CrossFade(acidMusic, normalMusic, crossfadeDurationOut, crossfadeDurationIn, musicVolumeNormal, 1.0f);
         }
         else
         {
-            CrossFade(normalMusic, acidMusic, crossfadeDurationOut, crossfadeDurationIn, musicVolumeAcid);
+            CrossFade(normalMusic, acidMusic, crossfadeDurationOut, crossfadeDurationIn, musicVolumeAcid, acidPitch);
         }
     }
 
@@ -114,9 +117,9 @@ public class MusicPlayer : MonoBehaviour
         return source;
     }
 
-    public void Fade(AudioSource fadeSource, float targetVolume, float duration = 0.5f)
+    public void Fade(AudioSource fadeSource, float targetVolume, float duration = 0.5f, float targetPitch = 1.0f)
     {
-        AudioFade fade = new AudioFade(duration, targetVolume, fadeSource);
+        AudioFade fade = new AudioFade(duration, targetVolume, fadeSource, targetPitch);
         fades.Add(fade);
     }
 
@@ -125,10 +128,10 @@ public class MusicPlayer : MonoBehaviour
         Fade(menuMusic, 0, duration);
     }
 
-    public void CrossFade(AudioSource fadeOutSource, AudioSource fadeInSource, float durationOut, float durationIn, float volume)
+    public void CrossFade(AudioSource fadeOutSource, AudioSource fadeInSource, float durationOut, float durationIn, float volume, float targetPitch)
     {
-        AudioFade fadeOut = new AudioFade(durationOut, 0f, fadeOutSource);
-        AudioFade fadeIn = new AudioFade(durationIn, volume, fadeInSource);
+        AudioFade fadeOut = new AudioFade(durationOut, 0f, fadeOutSource, targetPitch);
+        AudioFade fadeIn = new AudioFade(durationIn, volume, fadeInSource, targetPitch);
         fades.Add(fadeOut);
         fades.Add(fadeIn);
     }
@@ -152,7 +155,7 @@ public class MusicPlayer : MonoBehaviour
 
 public class AudioFade
 {
-    public AudioFade(float duration, float target, AudioSource track)
+    public AudioFade(float duration, float target, AudioSource track, float targetPitch)
     {
         this.duration = duration;
         IsFading = true;
@@ -160,6 +163,9 @@ public class AudioFade
         originalVolume = track.volume;
         targetVolume = target;
         audioSource = track;
+
+        originalPitch = track.pitch;
+        this.targetPitch = targetPitch;
     }
     public bool IsFading { get; private set; }
     private float duration;
@@ -168,13 +174,17 @@ public class AudioFade
     private AudioSource audioSource;
     private float originalVolume;
 
+    private float originalPitch, targetPitch;
+
     public void Update()
     {
         timer += Time.unscaledDeltaTime / duration;
         audioSource.volume = Mathf.Lerp(originalVolume, targetVolume, timer);
+        audioSource.pitch = Mathf.Lerp(originalPitch, targetPitch, timer);
         if (timer >= 1)
         {
             audioSource.volume = targetVolume;
+            audioSource.pitch = targetPitch;
             IsFading = false;
         }
     }
