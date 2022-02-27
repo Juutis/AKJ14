@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playtestStepOffset: 0
   speed: 2
-  speedIncrease: 0.05
+  speedIncrease: 0.03
   speedIncreaseStepInterval: 10
   speedMax: 5
   worldHeight: 10
@@ -65,14 +65,14 @@ MonoBehaviour:
   - isEnabled: 1
     moveObjectType: 4
     spawnInterval: 9
-    spawnOffset: 200
+    spawnOffset: 600
     spawnAmount: 1
     maxSpawns: 2
-    increaseStepInterval: 500
+    increaseStepInterval: 750
   - isEnabled: 1
     moveObjectType: 4
     spawnInterval: 5
-    spawnOffset: 200
+    spawnOffset: 2500
     spawnAmount: 1
     maxSpawns: 1
     increaseStepInterval: 0
