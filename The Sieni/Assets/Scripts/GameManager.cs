@@ -65,6 +65,7 @@ public class GameManager : MonoBehaviour
             playerInput.Stop();
             Debug.Log("You hit a tree!");
             WorldMover.main.IsMoving = false;
+            SoundManager.main.PlaySound(GameSoundType.Hit);
             GameOver();
         }
         else
@@ -73,10 +74,11 @@ public class GameManager : MonoBehaviour
         }
         if (objectType == MoveObjectType.RegularShroom)
         {
-            int score = 1;
-            GainScore(score);
+            //int score = 1;
+            int scoreGained = GainScore(1);
             Vector3 offset = new Vector3(0, 1f, 0f);
-            UIManager.main.ShowPoppingMessage(PlayerInput.main.transform.position + offset, $"+{score}");
+            UIManager.main.ShowPoppingMessage(PlayerInput.main.transform.position + offset, $"+{scoreGained}");
+            SoundManager.main.PlaySound(GameSoundType.PickupRegular);
             AddCollectedShroom(objectType);
         }
         if (objectType == MoveObjectType.MoveShroom)
@@ -86,6 +88,8 @@ public class GameManager : MonoBehaviour
             moveShroomEffectCount++;
             Invoke("EndMoveShroomEffect", getDurationForType(objectType));
             UIManager.main.RemapButtons();
+            SoundManager.main.PlaySound(GameSoundType.PickupMovement);
+            MusicPlayer.main.SwitchMusic(false);
             AddCollectedShroom(objectType);
         }
         if (objectType == MoveObjectType.VisionShroom)
@@ -94,6 +98,8 @@ public class GameManager : MonoBehaviour
             ShroomEffects.Main.SetDizzyCamera(true);
             visionShroomEffectCount++;
             Invoke("EndVisionShroomEffect", getDurationForType(objectType));
+            SoundManager.main.PlaySound(GameSoundType.PickupVision);
+            MusicPlayer.main.SwitchMusic(false);
             AddCollectedShroom(objectType);
         }
         if (objectType == MoveObjectType.DisableControlShroom)
@@ -103,21 +109,30 @@ public class GameManager : MonoBehaviour
             disableControlsShroomEffectCount++;
             Invoke("EndDisableControlsShroomEffect", getDurationForType(objectType));
             UIManager.main.RemapButtons();
+            SoundManager.main.PlaySound(GameSoundType.PickupButton);
+            MusicPlayer.main.SwitchMusic(false);
             AddCollectedShroom(objectType);
         }
     }
 
-    public void GainScore(int score)
+    public int GainScore(int score)
     {
         Debug.Log($"Gained {score * scoreMultiplier} score! Now you have {totalScore}!");
         totalScore += score * scoreMultiplier;
         UIManager.main.UpdateScore(scoreMultiplier, totalScore, collectedShrooms);
+        return totalScore;
     }
 
     public void GainMultiplier(MoveObjectType objectType)
     {
-        scoreMultiplier += multipliers.FirstOrDefault(x => x.Type == objectType)?.Multiplier ?? 0;
+        int multiplierAddition = multipliers.FirstOrDefault(x => x.Type == objectType)?.Multiplier ?? 0;
+        scoreMultiplier += multiplierAddition;
         UIManager.main.UpdateScore(scoreMultiplier, totalScore, collectedShrooms);
+        if (multiplierAddition != 0)
+        {
+            Vector3 offset = new Vector3(0, 0.5f, 0f);
+            UIManager.main.ShowPoppingMessage(PlayerInput.main.transform.position + offset, $"X{multiplierAddition} multiplier!");
+        }
     }
 
     public void GameOver()
@@ -131,12 +146,14 @@ public class GameManager : MonoBehaviour
         moveShroomEffectCount--;
         if (moveShroomEffectCount <= 0)
         {
-            if (disableControlsShroomEffectCount <= 0) {
+            if (disableControlsShroomEffectCount <= 0)
+            {
                 RemappableInput.Main.ResetDirections();
             }
             if (totalEffectCount <= 0)
             {
                 ShroomEffects.Main.SetOnAcid(false);
+                MusicPlayer.main.SwitchMusic(true);
             }
             UIManager.main.RemapButtons();
         }
@@ -151,19 +168,25 @@ public class GameManager : MonoBehaviour
             if (totalEffectCount <= 0)
             {
                 ShroomEffects.Main.SetOnAcid(false);
+                MusicPlayer.main.SwitchMusic(true);
             }
         }
     }
 
-    public void EndDisableControlsShroomEffect() {
+    public void EndDisableControlsShroomEffect()
+    {
         disableControlsShroomEffectCount--;
-        if (disableControlsShroomEffectCount <= 0) {
+        if (disableControlsShroomEffectCount <= 0)
+        {
             RemappableInput.Main.EnableHorizontalControls();
-            if (moveShroomEffectCount <= 0) {
+            if (moveShroomEffectCount <= 0)
+            {
                 RemappableInput.Main.ResetDirections();
             }
-            if (totalEffectCount <= 0) {
+            if (totalEffectCount <= 0)
+            {
                 ShroomEffects.Main.SetOnAcid(false);
+                MusicPlayer.main.SwitchMusic(true);
             }
             UIManager.main.RemapButtons();
         }
@@ -191,16 +214,20 @@ public class GameManager : MonoBehaviour
         moveShroomsEaten++;
     }
 
-    private void disableControls() {
-        if (disableControlsShroomsEaten < 5) {
+    private void disableControls()
+    {
+        if (disableControlsShroomsEaten < 5)
+        {
             RemappableInput.Main.DisableHorizontalControls();
-        } else {
+        }
+        else
+        {
             RemappableInput.Main.DisableHorizontalControls();
             RemappableInput.Main.SwapHorizontalAndVerticalControls();
         }
         disableControlsShroomsEaten++;
     }
-    
+
     private void AddCollectedShroom(MoveObjectType type)
     {
         if (!collectedShrooms.ContainsKey(type))
@@ -214,14 +241,17 @@ public class GameManager : MonoBehaviour
         updateStoryMode();
     }
 
-    public int GetCollectedCount(MoveObjectType type) {
+    public int GetCollectedCount(MoveObjectType type)
+    {
         return collectedShrooms.GetValueOrDefault(type, 0);
     }
 
-    private void updateStoryMode() {
+    private void updateStoryMode()
+    {
         if (!StoryMode) return;
 
-        foreach(var winRequirement in shroomsRequiredForWin) {
+        foreach (var winRequirement in shroomsRequiredForWin)
+        {
             if (GetCollectedCount(winRequirement.Type) < winRequirement.Count) return;
         }
 
