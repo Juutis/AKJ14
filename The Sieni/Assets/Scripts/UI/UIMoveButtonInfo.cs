@@ -38,6 +38,14 @@ public class UIMoveButtonInfo : MonoBehaviour
         Debug.Log($"I ({buttonType}) was set to {txtIcon.text}");
     }
 
+    public void SetEnabled(bool enabled)
+    {
+        txtKey.enabled = enabled;
+        txtIcon.enabled = enabled;
+        imgIcon.enabled = enabled;
+        imgButton.enabled = enabled;
+    }
+
     public void Highlight()
     {
         imgButton.color = highlightColor;
