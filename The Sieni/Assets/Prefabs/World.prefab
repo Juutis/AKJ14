@@ -214,6 +214,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &6005923946606401402
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7898304197988317072}
+  m_Layer: 0
+  m_Name: birds
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7898304197988317072
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6005923946606401402}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6866678855301099833}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6866678855301101255
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,6 +285,7 @@ Transform:
   - {fileID: 1659200020958185228}
   - {fileID: 5872941564416811083}
   - {fileID: 146738249497699141}
+  - {fileID: 7898304197988317072}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -295,8 +327,9 @@ MonoBehaviour:
   - {fileID: 3082554835777583606, guid: 522fd581178e8274587eb56996047f66, type: 3}
   - {fileID: 734142666506931786, guid: bb6f916ea565ddf4783755b8da1c976a, type: 3}
   - {fileID: 3082554835777583606, guid: d40f3b62bc74d7a4b9f2bb65bc75431b, type: 3}
+  - {fileID: 3082554835777583606, guid: 1f7599e9885745d4990417a4aa52ca4d, type: 3}
   poolSize: 5
-  objectTypes: 01000000020000000300000004000000050000000600000007000000
+  objectTypes: 0100000002000000030000000400000005000000060000000700000008000000
   containerPrefab: {fileID: 6866678855159894895}
 --- !u!114 &5589454907514506401
 MonoBehaviour:
@@ -340,6 +373,7 @@ MonoBehaviour:
   worldMover: {fileID: 6866678855301101254}
   container: {fileID: 5872941564416811083}
   cloudContainer: {fileID: 146738249497699141}
+  birdContainer: {fileID: 7898304197988317072}
 --- !u!1001 &2621713734272808151
 PrefabInstance:
   m_ObjectHideFlags: 0

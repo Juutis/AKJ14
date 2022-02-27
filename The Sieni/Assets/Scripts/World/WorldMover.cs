@@ -218,8 +218,7 @@ public class WorldMover : MonoBehaviour
     private void MoveObject(WorldMoveObject moveObject, float moveDistance)
     {
         Vector2 newPos = moveObject.transform.position;
-        newPos.x -= moveDistance * (moveObject.ObjectType == MoveObjectType.Cloud ? 20f : 1f);
-        if(moveObject.ObjectType == MoveObjectType.Cloud) Debug.Log("moi");
+        newPos.x -= moveDistance;
         moveObject.transform.position = newPos;
     }
 
