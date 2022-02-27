@@ -55,7 +55,7 @@ MonoBehaviour:
     spawnAmount: 1
     maxSpawns: 2
     increaseStepInterval: 200
-  - isEnabled: 1
+  - isEnabled: 0
     moveObjectType: 5
     spawnInterval: 1
     spawnOffset: 0

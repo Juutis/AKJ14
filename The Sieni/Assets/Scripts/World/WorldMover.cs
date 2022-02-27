@@ -46,6 +46,8 @@ public class WorldMover : MonoBehaviour
 
     public bool IsMoving { get { return isMoving; } set { isMoving = value; } }
 
+    [SerializeField]
+    private WorldDecorationSpawner decorationSpawner;
 
     void Start()
     {
@@ -56,6 +58,7 @@ public class WorldMover : MonoBehaviour
         worldBounds.DetermineBounds();
         spawnPositions = InitializeSpawnPositions();
         objectPool.Initialize();
+        decorationSpawner.SetArea(worldBounds.GetSize());
 
 #if UNITY_EDITOR
         distanceMoved += moveConfig.PlaytestStepOffset;
@@ -170,7 +173,15 @@ public class WorldMover : MonoBehaviour
             for (int objectIndex = 0; objectIndex < moveObjects.Count; objectIndex += 1)
             {
                 MoveObject(moveObjects[objectIndex], moveDistance);
-                CheckObject(moveObjects[objectIndex]);
+                bool isOut = CheckObject(moveObjects[objectIndex]);
+                if (isOut)
+                {
+                    Sleep(moveObjects[objectIndex]);
+                }
+            }
+            if (decorationSpawner != null)
+            {
+                decorationSpawner.Move(moveDistance);
             }
         }
     }
@@ -211,11 +222,8 @@ public class WorldMover : MonoBehaviour
         moveObject.transform.position = newPos;
     }
 
-    private void CheckObject(WorldMoveObject moveObject)
+    public bool CheckObject(WorldMoveObject moveObject)
     {
-        if (moveObject.transform.position.x < worldBounds.KillZoneX(moveConfig.BufferZoneSize))
-        {
-            Sleep(moveObject);
-        }
+        return moveObject.transform.position.x < worldBounds.KillZoneX(moveConfig.BufferZoneSize);
     }
 }

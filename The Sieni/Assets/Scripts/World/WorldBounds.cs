@@ -11,16 +11,9 @@ public class WorldBounds : MonoBehaviour
     private void OnDrawGizmos()
     {
 #if UNITY_EDITOR
-        if (Application.isPlaying)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(Vector2.zero,
-                new Vector2(
-                    Mathf.Abs(minUnitySize.x - maxUnitySize.x),
-                    Mathf.Abs(minUnitySize.y - maxUnitySize.y)
-                )
-            );
-        }
+        DetermineBounds();
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(Vector2.zero, GetSize());
 #endif
     }
 
@@ -40,6 +33,9 @@ public class WorldBounds : MonoBehaviour
 
         maxUnitySize = Camera.main.ScreenToWorldPoint(bounds.max);
         minUnitySize = Camera.main.ScreenToWorldPoint(bounds.min);
+        maxUnitySize.y -= 1f;
+        minUnitySize.y += 1f;
+
 
     }
 
@@ -60,6 +56,15 @@ public class WorldBounds : MonoBehaviour
     public float SpawnX(float bufferZoneSize)
     {
         return maxUnitySize.x + bufferZoneSize;
+    }
+
+    public Vector2 GetSize()
+    {
+        return
+            new Vector2(
+                Mathf.Abs(minUnitySize.x - maxUnitySize.x),
+                Mathf.Abs(minUnitySize.y - maxUnitySize.y)
+            );
     }
 
 }

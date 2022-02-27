@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &671477760180342380
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5872941564416811083}
+  m_Layer: 0
+  m_Name: decoration
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5872941564416811083
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 671477760180342380}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6866678855301099833}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3772948814034926304
 GameObject:
   m_ObjectHideFlags: 0
@@ -146,6 +177,7 @@ GameObject:
   - component: {fileID: 5182968184930508913}
   - component: {fileID: 5589454907514506401}
   - component: {fileID: 8513748702684776024}
+  - component: {fileID: 8443127328720228395}
   m_Layer: 0
   m_Name: World
   m_TagString: Untagged
@@ -170,6 +202,7 @@ Transform:
   - {fileID: 6866678855159894895}
   - {fileID: 3906378257996662240}
   - {fileID: 1659200020958185228}
+  - {fileID: 5872941564416811083}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -190,6 +223,7 @@ MonoBehaviour:
   objectPool: {fileID: 5182968184930508913}
   worldBounds: {fileID: 5589454907514506401}
   scrollingMaterial: {fileID: 2100000, guid: 2f6488114a4362d4ab04557cb4fa0812, type: 2}
+  decorationSpawner: {fileID: 8443127328720228395}
 --- !u!114 &5182968184930508913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,6 +270,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldMover: {fileID: 6866678855301101254}
+--- !u!114 &8443127328720228395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6866678855301101255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f8379db800cf9d4fa69751b717dbac6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DecorationConfig: {fileID: 11400000, guid: b32a7bfbb3d35f348b8ff756645d14e6, type: 2}
+  objectPool: {fileID: 5182968184930508913}
+  worldMover: {fileID: 6866678855301101254}
+  container: {fileID: 5872941564416811083}
+  moveObjects: []
 --- !u!1001 &2621713734272808151
 PrefabInstance:
   m_ObjectHideFlags: 0

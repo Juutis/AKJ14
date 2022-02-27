@@ -92,6 +92,7 @@ public class ObjectPool : MonoBehaviour
         sleepObject.Sleep();
         activeObjects[sleepObject.ObjectType].Remove(sleepObject);
         sleepingObjects[sleepObject.ObjectType].Add(sleepObject);
+        sleepObject.transform.SetParent(objectContainers[sleepObject.ObjectType], true);
     }
 
     public WorldMoveObject Get(MoveObjectType objectType)
