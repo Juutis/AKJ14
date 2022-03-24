@@ -67,14 +67,18 @@ public class UIManager : MonoBehaviour
         popText.Show(pos, message);
     }
 
+
     public void ShowGameOver()
     {
         uiGameOver.gameObject.SetActive(true);
+        uiGameOver.Show();
         storyUI.gameObject.SetActive(false);
     }
 
-    public void ShowWin() {
+    public void ShowWin()
+    {
         WinUI.gameObject.SetActive(true);
+        WinUI.Show();
         storyUI.gameObject.SetActive(false);
     }
 }
