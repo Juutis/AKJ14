@@ -35,6 +35,15 @@ public class UIMenu : MonoBehaviour
 #endif
         if (isMainMenu)
         {
+            string previousMode = PlayerPrefs.GetString("previousMode", "story");
+            if (previousMode == "endless")
+            {
+                selectorIndex = 1;
+            }
+            else if (previousMode == "story")
+            {
+                selectorIndex = 0;
+            }
             UIMenuSelection mmSelection = selections.FirstOrDefault(selection => selection.SelectionType == UISelectionType.MainMenu);
             UIMenuSelection restartSelection = selections.FirstOrDefault(selection => selection.SelectionType == UISelectionType.Restart);
             selections.Remove(mmSelection);
@@ -120,13 +129,17 @@ public class UIMenu : MonoBehaviour
     {
         selectorIndex = 0;
         UISelectionType selectionType = CurrentSelection.SelectionType;
+
         if (selectionType == UISelectionType.Story)
         {
+            PlayerPrefs.SetString("previousMode", "story");
             Time.timeScale = 1f;
             SceneManager.LoadScene(1);
+
         }
         if (selectionType == UISelectionType.Endless)
         {
+            PlayerPrefs.SetString("previousMode", "endless");
             Time.timeScale = 1f;
             SceneManager.LoadScene(2);
         }

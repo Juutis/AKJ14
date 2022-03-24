@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6afb550071a13bb4884b092a284f5f5d, type: 3}
   m_Name: WorldMoverConfig_Endless
   m_EditorClassIdentifier: 
-  playtestStepOffset: 200
-  speed: 2
-  speedIncrease: 0.03
-  speedIncreaseStepInterval: 10
-  speedMax: 5
+  playtestStepOffset: 0
+  speed: 3
+  speedIncrease: 0.5
+  speedIncreaseStepInterval: 80
+  speedMax: 7
   worldHeight: 10
   bufferZoneSize: 1
   spawns:
@@ -83,7 +83,8 @@ MonoBehaviour:
     spawnAmount: 2
     maxSpawns: 2
     increaseStepInterval: 0
+  alwaysShortButtonChange: 1
   debuggingEnabled: 1
-  debugStepAmount: 47
+  debugStepAmount: 54
   debugStepStart: 1000
   debugDrawEmpty: 1

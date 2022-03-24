@@ -30,8 +30,13 @@ public class WorldMoverConfig : ScriptableObject
     [SerializeField]
     private float bufferZoneSize = 1;
 
+
     [SerializeField]
     private List<MoveObjectSpawn> spawns = new List<MoveObjectSpawn>();
+
+    [SerializeField]
+    private bool alwaysShortButtonChange = false;
+    public bool AlwaysShortButtonChange { get { return alwaysShortButtonChange; } }
 
     public int PlaytestStepOffset { get { return playtestStepOffset; } }
     public float Speed { get { return speed; } }

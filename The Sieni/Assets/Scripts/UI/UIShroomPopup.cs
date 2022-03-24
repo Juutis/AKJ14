@@ -48,6 +48,7 @@ public class UIShroomPopup : MonoBehaviour
 
     public void Popup(MoveObjectType objectType = MoveObjectType.None, bool affectCount = true)
     {
+        bool alwaysShowShort = WorldMover.main.MoveConfig.AlwaysShortButtonChange;
         popupping = true;
         foreach (UIMoveButtonInfo moveButton in moveButtons)
         {
@@ -68,7 +69,7 @@ public class UIShroomPopup : MonoBehaviour
                 showLong = mapTypesToCount[objectType] < countToShow + 1;
             }
         }
-        if (showLong)
+        if (showLong && !alwaysShowShort)
         {
             animator.Play("Show");
         }
