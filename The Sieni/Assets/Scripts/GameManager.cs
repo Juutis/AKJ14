@@ -257,10 +257,6 @@ public class GameManager : MonoBehaviour
         UIManager.main.ShowWin();
     }
 
-    public void Restart()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
 }
 
 

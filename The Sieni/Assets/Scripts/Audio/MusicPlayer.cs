@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-
+using UnityEngine.SceneManagement;
 
 public class MusicPlayer : MonoBehaviour
 {
     public static MusicPlayer main;
+
 
     private AudioSource menuMusic;
     private AudioSource normalMusic;
@@ -19,6 +20,8 @@ public class MusicPlayer : MonoBehaviour
 
     [SerializeField]
     private float acidPitch = 0.8f;
+
+    private float originalAcidPitch = 1f;
 
     private List<AudioFade> fades = new List<AudioFade>();
 
@@ -41,7 +44,21 @@ public class MusicPlayer : MonoBehaviour
 
     private void Awake()
     {
+        if (main != null)
+        {
+            Destroy(this);
+            main.ResetEffects();
+            return;
+        }
         main = this;
+        DontDestroyOnLoad(this);
+    }
+
+    public void Kill()
+    {
+        Debug.Log("ill");
+        main = null;
+        Destroy(gameObject);
     }
 
     private void Start()
@@ -102,6 +119,7 @@ public class MusicPlayer : MonoBehaviour
         if (acidMusic == null)
         {
             acidMusic = InitializeAudioSource("Acid music", acidMusicClip);
+            originalAcidPitch = acidMusic.pitch;
         }
     }
 
@@ -150,6 +168,15 @@ public class MusicPlayer : MonoBehaviour
                 fades.Remove(fade);
             }
         }
+    }
+
+    public void ResetEffects()
+    {
+        fades.Clear();
+        isCurrentlyNormal = true;
+        normalMusic.volume = musicVolumeNormal;
+        acidMusic.volume = 0;
+        acidMusic.pitch = originalAcidPitch;
     }
 }
 

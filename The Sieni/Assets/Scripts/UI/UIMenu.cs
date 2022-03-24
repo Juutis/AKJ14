@@ -41,6 +41,10 @@ public class UIMenu : MonoBehaviour
             mmSelection.gameObject.SetActive(false);
             selections.Remove(restartSelection);
             restartSelection.gameObject.SetActive(false);
+            if (MusicPlayer.main != null)
+            {
+                MusicPlayer.main.Kill();
+            }
         }
         else
         {
@@ -118,10 +122,12 @@ public class UIMenu : MonoBehaviour
         UISelectionType selectionType = CurrentSelection.SelectionType;
         if (selectionType == UISelectionType.Story)
         {
+            Time.timeScale = 1f;
             SceneManager.LoadScene(1);
         }
         if (selectionType == UISelectionType.Endless)
         {
+            Time.timeScale = 1f;
             SceneManager.LoadScene(2);
         }
         if (selectionType == UISelectionType.Exit)
@@ -130,10 +136,14 @@ public class UIMenu : MonoBehaviour
         }
         if (selectionType == UISelectionType.MainMenu)
         {
+            MusicPlayer.main.ResetEffects();
+            Time.timeScale = 1f;
             SceneManager.LoadScene(0);
         }
         if (selectionType == UISelectionType.Restart)
         {
+            MusicPlayer.main.ResetEffects();
+            Time.timeScale = 1f;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
