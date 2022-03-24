@@ -70,6 +70,8 @@ public class WorldMover : MonoBehaviour
         );
 #endif
 
+        UISpeedIndicator.main.SetSpeed(speedIncrease + moveConfig.Speed);
+
         scrollingMaterial.SetFloat("_Offset_X", 0.0f);
     }
 
@@ -150,6 +152,10 @@ public class WorldMover : MonoBehaviour
             currentStep += 1;
             isSpawning = true;
             isMovingObjects = true;
+            if ((speedIncrease + moveConfig.Speed) < moveConfig.SpeedMax)
+            {
+                UISpeedIndicator.main.IncreaseStep();
+            }
         }
     }
 
@@ -169,6 +175,7 @@ public class WorldMover : MonoBehaviour
         {
             previousSpeedIncreaseStep = currentStep;
             speedIncrease += moveConfig.SpeedIncrease;
+            UISpeedIndicator.main.SetSpeed(speedIncrease + moveConfig.Speed);
         }
     }
 

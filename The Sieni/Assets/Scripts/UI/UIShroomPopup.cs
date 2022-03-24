@@ -48,6 +48,10 @@ public class UIShroomPopup : MonoBehaviour
 
     public void Popup(MoveObjectType objectType = MoveObjectType.None, bool affectCount = true)
     {
+        if (popupping)
+        {
+            Debug.Log("uh oh");
+        }
         bool alwaysShowShort = WorldMover.main.MoveConfig.AlwaysShortButtonChange;
         popupping = true;
         foreach (UIMoveButtonInfo moveButton in moveButtons)
