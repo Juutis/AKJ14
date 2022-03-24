@@ -19,6 +19,7 @@ public class UISpeedIndicator : MonoBehaviour
     private int stepInterval = 0;
     private float speedMax = 0;
 
+    [SerializeField]
     private Transform container;
 
     void Start()
